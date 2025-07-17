@@ -1,0 +1,104 @@
+﻿<models:ToolWindow  x:Class="BlockEditor.Views.Windows.EditRegionWindow"
+        xmlns:models="clr-namespace:BlockEditor.Models"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:local="clr-namespace:BlockEditor.Views.Controls"
+        mc:Ignorable="d"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Width="400"
+        SizeToContent="Height"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Border Background="{StaticResource LightBackground}" 
+            BorderBrush="{StaticResource StandardBorderColor}"
+            BorderThickness="2"
+            CornerRadius="15"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            Padding="10">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Button Style="{StaticResource CloseBtn}" Margin="0,2,0,0" Click="CloseButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            </Grid>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" x:Name="Page2" Visibility="Visible">
+                <Label Content="Move Art" x:Name="Page2Title" FontWeight="SemiBold" Margin="0,-15,0,0" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <StackPanel  Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Vertical">
+                        <CheckBox Margin="0,5,0,0" Content="Text Art 00" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbTextArt00"  />
+                        <CheckBox Margin="0,10,0,0" Content="Text Art 0" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbTextArt0"  />
+                        <CheckBox Margin="0,10,0,0" Content="Text Art 1" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbTextArt1"  />
+                        <CheckBox Margin="0,10,0,0" Content="Text Art 2" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbTextArt2"  />
+                        <CheckBox Margin="0,10,0,0" Content="Text Art 3" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbTextArt3"  />
+                        <CheckBox Margin="0,10,0,0" Content="Blocks"     VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbBlocks"  />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical" Margin="50,0,0,0">
+                        <CheckBox Margin="0,5,0,0" Content="Draw Art 00" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbDrawArt00"  />
+                        <CheckBox Margin="0,10,0,0" Content="Draw Art 0" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbDrawArt0"  />
+                        <CheckBox Margin="0,10,0,0" Content="Draw Art 1" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbDrawArt1"  />
+                        <CheckBox Margin="0,10,0,0" Content="Draw Art 2" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbDrawArt2"  />
+                        <CheckBox Margin="0,10,0,0" Content="Draw Art 3" VerticalContentAlignment="Center" FontSize="{StaticResource DefaultFontSize}" IsChecked="True" x:Name="cbDrawArt3"  />
+                    </StackPanel>
+
+
+                </StackPanel>
+
+
+                <Label Margin="0,7,0,0" FontWeight="SemiBold" Content="Region:"/>
+                <ComboBox Margin="4,0,0,0" x:Name="cbSelection" FontSize="{StaticResource DefaultFontSize}" SelectionChanged="cbSelection_SelectionChanged"/>
+
+                <StackPanel x:Name="MovePanel">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="0,10,0,0" FontWeight="SemiBold" Content="X-Movement: "/>
+                        <Label Margin="5,10,0,0" FontWeight="Normal" FontSize="12"  Content="(Positive values moves art right)" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <TextBox Margin="4,0,0,0" x:Name="tbX"  PreviewTextInput="Double_PreviewTextInput" TextChanged="tbX_TextChanged" FontSize="{StaticResource DefaultFontSize}"  />
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label Margin="0,10,0,0" FontWeight="SemiBold" Content="Y-Movement: "/>
+                        <Label Margin="5,10,0,0" FontWeight="Normal" FontSize="12" Content="(Positive values moves art down)" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBox Margin="4,0,0,0" x:Name="tbY" PreviewTextInput="Double_PreviewTextInput" TextChanged="tbY_TextChanged" FontSize="{StaticResource DefaultFontSize}"  />
+                </StackPanel>
+
+                <StackPanel x:Name="ReplaceColorPanel" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0" VerticalAlignment="Center">
+                        <Label FontWeight="SemiBold" Margin="0,5,0,0" FontSize="{StaticResource DefaultFontSize}" Content="Color to Replace: " Width="125"/>
+                        <local:ColorPickerControl Height="30" Margin="4,5,0,0" x:Name="MyColorPickerReplace" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0" VerticalAlignment="Center">
+                        <Label FontWeight="SemiBold" Margin="0,5,0,0" FontSize="{StaticResource DefaultFontSize}" Content="Color to Add:" Width="125"/>
+                        <local:ColorPickerControl Height="30" Margin="4,5,0,0" x:Name="MyColorPickerAdd" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </StackPanel>
+                    
+                    <Label Margin="0,7,0,0" FontWeight="SemiBold" Content="Color Sensitivity:"/>
+                    <ComboBox Margin="4,0,0,0" x:Name="cbSensitivity" SelectionChanged="cbSensitivity_SelectionChanged" FontSize="{StaticResource DefaultFontSize}"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" Margin="20,20,20,10" HorizontalAlignment="Center">
+                    <Button Style="{StaticResource WhiteBtn}" FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" x:Name="btnOk" Content="OK" Margin="5,5,15,5" Click="btnOk_Click" />
+                    <Button Style="{StaticResource WhiteBtn}" FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" Content="Cancel" Margin="15,5,5,5" Click="btnCancel_Click" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+
+
+    </Border>
+</models:ToolWindow> 

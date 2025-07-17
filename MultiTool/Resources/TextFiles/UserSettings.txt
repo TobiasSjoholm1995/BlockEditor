@@ -1,0 +1,4 @@
+username = Killer
+token = b7c17fa206883cb22e4c87e8e06634bc
+current = True
+

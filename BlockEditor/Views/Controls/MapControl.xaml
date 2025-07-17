@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="BlockEditor.Views.Controls.MapControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:myControls="clr-namespace:BlockEditor.Views.Controls"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.WPF;assembly=SkiaSharp.Views.WPF"
+             mc:Ignorable="d" 
+             Loaded="Map_OnLoaded">
+
+    <Grid Focusable="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="88" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                Focusable="False"
+                HorizontalAlignment="Stretch" 
+                VerticalAlignment="Stretch" 
+                Background="{StaticResource LightBackground}">
+
+            <StackPanel Focusable="False" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <Button Focusable="False" IsTabStop="False"  Height="40" Width="35" Margin="10,8,5,8" VerticalAlignment="Center" Content=" &#128896; " FontWeight="SemiBold" FontSize="26" FontFamily="Segoe UI" Command="{Binding Game.UserOperations.UndoCommand}" ToolTip="Undo &#x0a;Hotkey:  Ctrl + Z"/>
+                <Button Focusable="False" IsTabStop="False"  Height="40" Width="35" Margin="5,8,0,8"  VerticalAlignment="Center" Content=" &#128898; " FontWeight="SemiBold" FontSize="26" FontFamily="Segoe UI" Command="{Binding Game.UserOperations.RedoCommand}" ToolTip="Redo &#x0a;HotKey:  Ctrl + Y"/>
+
+                <ToggleButton Focusable="False" Margin="27,3,27,3" Height="34" Width="65" VerticalAlignment="Center" IsTabStop="False" FontSize="{StaticResource DefaultFontSize}"  IsChecked="{Binding Game.Mode.IsSelectionMode, Mode=OneWay}"  Content="Select" FontWeight="SemiBold" FontFamily="Segoe UI" Command="{Binding Commands.SelectCommand}" ToolTip="Select Blocks &#x0a;Hotkey:  Shift"/>
+
+                <Button       Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="❌"       FontSize="17"    FontWeight="Normal"    FontFamily="Segoe UI" IsTabStop="False"  Command="{Binding Commands.DeselectCommand}"                                                                ToolTip="Deselect everything&#x0a;Hotkey:  Escape" Foreground="Red"/>
+                <ToggleButton Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="🔨"        FontSize="22"   FontWeight="Normal"    FontFamily="Segoe UI" IsTabStop="False"  Command="{Binding Commands.BuildCommand}"      IsChecked="{Binding Game.Mode.IsBuildMode, Mode=OneWay}"      ToolTip="Build Tools&#x0a;Hotkey:  B"/>
+                <ToggleButton Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="🗘"         FontSize="25"   FontWeight="Normal"      FontFamily="Segoe UI" IsTabStop="False"   Command="{Binding Commands.TransformCommand}" IsChecked="{Binding Game.Mode.IsTransformMode, Mode=OneWay}"  ToolTip="Transform Tools&#x0a;Hotkey:  T"/>
+                <ToggleButton Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="&#128465;" FontSize="17"   FontWeight="Bold"       FontFamily="Segoe UI" IsTabStop="False"  Command="{Binding Commands.DeleteCommand}"    IsChecked="{Binding Game.Mode.IsDeleteMode, Mode=OneWay}"     ToolTip="Remove Tools&#x0a;Hotkey:  R"/>
+                <ToggleButton Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="✏"        FontSize="18"   FontWeight="Bold"       FontFamily="Segoe UI" IsTabStop="False"  Command="{Binding Commands.EditCommand}"      IsChecked="{Binding Game.Mode.IsEditMode, Mode=OneWay}"       ToolTip="Edit Tools&#x0a;Hotkey:  E"/>
+                <ToggleButton Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="💠"        FontSize="22"   FontWeight="Normal"     FontFamily="Segoe UI" IsTabStop="False" Command="{Binding Commands.AdvancedCommand}"   IsChecked="{Binding Game.Mode.IsAdvancedMode, Mode=OneWay}"  ToolTip="Advanced Tools&#x0a;Hotkey:  Q"/>
+                <ToggleButton Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="&#128712;" FontSize="26"   FontWeight="Normal"     FontFamily="Segoe UI" IsTabStop="False"  Command="{Binding Commands.InfoCommand}"      IsChecked="{Binding Game.Mode.IsInfoMode, Mode=OneWay}"       ToolTip="Info Tools&#x0a;Hotkey:  I"/>
+                <Button       Focusable="False" Margin="4,3,4,3" Height="34" Width="40" Content="&#8982;"   FontSize="26"   FontWeight="SemiBold"   FontFamily="Segoe UI" IsTabStop="False"  Command="{Binding Commands.NavigatorCommand}"                                                              ToolTip="Navigator&#x0a;Hotkey:  N"/>
+
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" Margin="0,2,0,2">
+                    <CheckBox Focusable="False" IsTabStop="False" IsChecked="{Binding IsOverwrite, Mode=TwoWay}" Margin="30,0,7,0" Height="25" VerticalContentAlignment="Center" Content="Overwrite"  FontSize="14" FontWeight="SemiBold" FontFamily="Segoe UI" ToolTip="Overwrite Block&#x0a;Hotkey:  O"/>
+                    <CheckBox Focusable="False" IsTabStop="False" IsChecked="{Binding ShowArt, Mode=TwoWay}"     Margin="30,-1,7,0" Height="25" VerticalContentAlignment="Center" Content="Show Art"   FontSize="14" FontWeight="SemiBold" FontFamily="Segoe UI" ToolTip="Show Art"  IsEnabled="{Binding ShowArtIsEnabled, Mode=OneWay}"/>
+                </StackPanel>
+
+            </StackPanel>
+
+        </Border>
+
+        <Grid 
+            Grid.Column="0"
+            Grid.Row="1" 
+            Grid.RowSpan="99"
+            Grid.ColumnSpan="99"
+            PreviewMouseDown="Map_PreviewMouseDown"
+            PreviewMouseMove="Map_PreviewMouseMove"
+            PreviewMouseUp="Map_PreviewMouseUp"
+            SizeChanged="Map_SizeChanged"
+            Name="GamePanel"
+            Focusable="False">
+
+            <skia:SKElement x:Name="SKControl" PaintSurface="SKControl_PaintSurface"/>
+
+            <StackPanel x:Name="SidePanel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70" />
+
+        </Grid>
+
+        <myControls:MapButtonsControl x:Name="MapButtons"
+            Grid.Column="0"  
+            Grid.Row="2"
+            HorizontalAlignment="Stretch"
+            Margin="50,10,50,20"
+            Focusable="False"
+            IsTabStop="False"/>
+
+        <myControls:ZoomControl Grid.Row="2" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           x:Name="ZoomControl"
+                           Margin="0,10,142,20"
+                           Focusable="False" 
+                           IsTabStop="False"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,60 @@
+﻿<Window x:Class="BlockEditor.Views.Windows.AccountWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Account"
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight"
+        MinWidth="500"
+        MinHeight="100"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing">
+
+    <Grid Margin="00, 20, 0, 15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Name="CurrentUserPanel" Background="{StaticResource StandardBackground}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock FontSize="{StaticResource DefaultFontSize}" Grid.Column="0" Margin="20,0,0,0" Text="Logged in as:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="cbUsers" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Grid.Column="1" FontWeight="SemiBold" Margin="10,0,0,0" SelectionChanged="cbUsers_SelectionChanged"  FontSize="{StaticResource DefaultFontSize}"/>
+            <Button x:Name="btnLogout" FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Grid.Column="2" Width="70" Height="25"  HorizontalAlignment="Right" Content="Logout" Margin="20,5,20,5" Click="Logout_Click" />
+        </Grid>
+        
+        <StackPanel Margin="20,0,20,0" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch">
+            <TextBlock FontWeight="SemiBold" Text="Username:" Margin="2, 30, 20, 0" FontSize="{StaticResource DefaultFontSize}"/>
+            <TextBox HorizontalAlignment="Stretch" Margin="0, 0, 0, 20" Name="NameTextbox" TextChanged="Name_TextChanged"/>
+
+            <TextBlock FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Text="Password:"  Margin="0, 10, 20, 0"/>
+            <PasswordBox FontSize="{StaticResource DefaultFontSize}" HorizontalAlignment="Stretch" Margin="0, 0, 0, 20" Name="PasswordTextbox" PasswordChanged="Password_TextChanged"/>
+
+        </StackPanel>
+
+        <TextBlock FontWeight="SemiBold" Margin="20,0,20,0" MaxWidth="500" TextWrapping="Wrap" Name="ErrorTextbox" HorizontalAlignment="Center" Foreground="Red" Text="Error" Grid.Row="2"/>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="20,15,20,0">
+            <Button FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" Content="Login" IsDefault="True" Margin="5" Name="BtnOk" Click="btnOk_Click" />
+            <Button FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" Content="Close" IsCancel="True" Margin="5" Click="btnCancel_Click" />
+        </StackPanel>
+        
+    </Grid>
+
+</Window>

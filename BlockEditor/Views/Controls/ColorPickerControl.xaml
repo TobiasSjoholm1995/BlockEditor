@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="BlockEditor.Views.Controls.ColorPickerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             VerticalAlignment="Stretch"
+             HorizontalAlignment="Stretch"
+             Width="auto"
+             MinHeight="20">
+    
+    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Horizontal">
+        <TextBox VerticalAlignment="Center" Width="70" 
+                 TextChanged="tbColor_TextChanged" 
+                 Margin="0,0,10,0"
+                 PreviewTextInput="HexOnly_PreviewTextInput"
+                 x:Name="tbColor" 
+                 FontSize="14" />
+        <Button VerticalAlignment="Center" Width="28" Height="20" x:Name="ColorButton" Click="ColorButton_Click"/>
+    </StackPanel>
+    
+</UserControl>

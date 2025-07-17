@@ -1,0 +1,95 @@
+﻿<models:ToolWindow  x:Class="BlockEditor.Views.Windows.BuildImageWindow"
+        xmlns:models="clr-namespace:BlockEditor.Models"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Width="435"
+        SizeToContent="Height"
+        Closing="Window_Closing"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Border Background="{StaticResource LightBackground}" 
+            BorderBrush="{StaticResource StandardBorderColor}"
+            BorderThickness="2"
+            CornerRadius="15"
+            VerticalAlignment="Stretch"
+            HorizontalAlignment="Stretch"
+            Padding="10">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Button Style="{StaticResource CloseBtn}" Margin="0,2,0,0" Click="CloseButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                <Label Content="Build Image" Margin="0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Top">
+
+                <Label Content="Image Filepath:" Margin="0,-5,0,0" FontWeight="SemiBold"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="tbPath" FontSize="12" Margin="4,3,0,3"/>
+                    <Button  Grid.Column="1" Content="&#128193;" FontSize="16" Width="40" Margin="5,0,0,0" Click="Path_Click"/>
+                </Grid>
+
+                <Label Margin="0,5,0,0" FontWeight="SemiBold" Content="Target:"/>
+                <ComboBox Margin="4,0,0,0" x:Name="cbTarget" SelectionChanged="target_SelectionChanged" FontSize="{StaticResource DefaultFontSize}"/>
+
+                <Label Margin="0,5,0,0" FontWeight="SemiBold" Content="Size:"/>
+                <ComboBox Margin="4,0,0,0" x:Name="cbSize" SelectionChanged="cb_SelectionChanged" FontSize="{StaticResource DefaultFontSize}"/>
+
+                <Label Margin="0,5,0,0" FontWeight="SemiBold" Content="Color to Ignore:"/>
+                <ComboBox Margin="4,1,0,1" x:Name="cbIgnoreColor" SelectionChanged="cb_SelectionChanged" FontSize="{StaticResource DefaultFontSize}"/>
+
+                <StackPanel x:Name="sensitivityPanel" Orientation="Vertical">
+                    <Label Margin="0,5,0,0" FontWeight="SemiBold" Content="Color Sensitivity:"/>
+                    <ComboBox Margin="4,0,0,0" x:Name="cbSensitivity" SelectionChanged="cb_SelectionChanged" FontSize="{StaticResource DefaultFontSize}"/>
+                </StackPanel>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <Label Content="X-Position:" Margin="0,5,0,0" FontWeight="SemiBold"/>
+                        <TextBox x:Name="tbPosX" Margin="4,0,0,0" TextChanged="tbPosX_TextChanged" PreviewTextInput="Double_PreviewTextInput" FontSize="12" />
+
+                        <Label Content="Y-Position:" Margin="0,5,0,0" FontWeight="SemiBold"/>
+                        <TextBox x:Name="tbPosY" Margin="4,0,0,0" TextChanged="tbPosY_TextChanged" PreviewTextInput="Double_PreviewTextInput" FontSize="12" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20,45,20,20">
+                        <Button Style="{StaticResource WhiteBtn}" FontWeight="SemiBold" Width="120" Height="25" Content="Get Position" Margin="5" Click="btnPosition_Click" />
+                    </StackPanel>
+
+                </Grid>
+               
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="20,15,20,5" HorizontalAlignment="Right">
+                <Button Style="{StaticResource WhiteBtn}" Width="120" Height="25" FontWeight="SemiBold" Content="OK" x:Name="btnOk" IsDefault="True" Margin="5" Click="btnOk_Click" />
+                <Button Style="{StaticResource WhiteBtn}" Width="120" Height="25" FontWeight="SemiBold" Content="Cancel" IsCancel="True" Margin="5" Name="btnCancel" Click="btnCancel_Click" />
+            </StackPanel>
+        </Grid>
+
+    </Border>
+
+</models:ToolWindow>

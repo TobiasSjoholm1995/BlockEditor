@@ -1,0 +1,57 @@
+﻿<models:ToolWindow  x:Class="BlockEditor.Views.Windows.NavigatorWindow"
+        xmlns:models="clr-namespace:BlockEditor.Models"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        SizeToContent="Height"
+        Width="350"
+        WindowStyle="None"
+        WindowStartupLocation="Manual"
+        AllowsTransparency="True" 
+        Background="Transparent"
+        PreviewKeyDown="Window_PreviewKeyDown">
+
+    <Border CornerRadius="15" BorderThickness="2" VerticalAlignment="Top" BorderBrush="{StaticResource StandardBorderBrush}" Background="{StaticResource StandardBackground}">
+        <StackPanel x:Name="OptionPanel" Orientation="Vertical" VerticalAlignment="Top" Margin="10" >
+            <Grid>
+                <Button Style="{StaticResource CloseBtn}" Click="CloseButton_Click" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                
+                <Border HorizontalAlignment="Center" BorderThickness="2" BorderBrush="Black" CornerRadius="2">
+                    <Image Name="BlockImage" Width="60" Height="60" />
+                </Border>
+            </Grid>
+
+            <TextBlock FontSize="16" FontWeight="Bold" Text="Navigator" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+          
+            <Grid Margin="20, 30, 0, 20" HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock FontSize="{StaticResource DefaultFontSize}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="99" FontWeight="SemiBold" VerticalAlignment="Center" Text="Position:" Margin="0,0,15,0" />
+                <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <TextBlock Text="X = " HorizontalAlignment="Left" FontSize="{StaticResource DefaultFontSize}"/>
+                    <TextBlock x:Name="lblPosX" Text="100" FontWeight="SemiBold" HorizontalAlignment="Left" FontSize="{StaticResource DefaultFontSize}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal">
+                    <TextBlock  Text="Y = " HorizontalAlignment="Left" FontSize="{StaticResource DefaultFontSize}"/>
+                    <TextBlock x:Name="lblPosY" Text="100" FontWeight="SemiBold" HorizontalAlignment="Left" FontSize="{StaticResource DefaultFontSize}"/>
+                </StackPanel>
+
+            </Grid>
+           
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="18">
+                <Button Style="{StaticResource WhiteBtn}" FontSize="14" Name="btnPrevious" Width="85" Height="30" Content="Previous" Click="OnPrevious"/>
+                <TextBlock x:Name="tbIndex" Text="0 / 0" FontWeight="Normal" FontSize="20" Margin="10,0,10,0" VerticalAlignment="Center"/>
+                <Button Style="{StaticResource WhiteBtn}" FontSize="14" Name="btnNext" Width="85" Height="30" Content="Next"  Click="OnNext"/>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</models:ToolWindow>
