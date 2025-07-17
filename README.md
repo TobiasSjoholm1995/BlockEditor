@@ -1,18 +1,11 @@
-# BlockEditor
+# Block Editor & Multi-Tool
 
-This is a Block Editor for Platform Racing 2.
+This repo contains both the Block Editor and the Multi-Tool.
 
-Only works for Windows.
+The Block Editor works only for Windows.
 
 Make sure to install the runtime .NET Core 3.1
 https://dotnet.microsoft.com/en-us/download/dotnet/3.1
 
-
-
-Here is a video tutorial for the tool:
+Here is a video tutorial for the Block Editor:
 https://www.youtube.com/watch?v=3FEkT4bA17Y
-
-
-
-Now the code also include the Multi-Tool. Merged 2 of my old repos.
-
