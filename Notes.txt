@@ -1,5 +1,5 @@
-When making a release, right click the project and select "Publish".
-Choose local folder and then select the Target Runtiem to "Portable".
+When making a release, right click the frontend project and select "Publish".
+Choose local folder and then select the Target Runtime to "Portable".
 This make sure that the user dont have to install the .NET Core runtime.
 
 Maybe in the future we can migrate the codebase to .NET 9?
