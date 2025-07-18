@@ -1,21 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36310.24 d17.14
+VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockEditor", "BlockEditor\BlockEditor.csproj", "{C93658AE-70FC-4863-90C8-DCE93B1CC4D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Builders", "..\BlockEditor\Builders\Builders.csproj", "{14DC63A5-54D3-9A24-79BD-52368895862C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Builders", "Builders\Builders.csproj", "{14DC63A5-54D3-9A24-79BD-52368895862C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converters", "..\BlockEditor\Converters\Converters.csproj", "{915C55DD-0DF1-A9AE-255E-B2AF78EEDB12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converters", "Converters\Converters.csproj", "{915C55DD-0DF1-A9AE-255E-B2AF78EEDB12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "..\BlockEditor\DataAccess\DataAccess.csproj", "{1AD7D3AB-DE7C-69AB-10C0-876097625BB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{1AD7D3AB-DE7C-69AB-10C0-876097625BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelModel", "..\BlockEditor\LevelModel\LevelModel.csproj", "{0E4542DD-030D-89F6-3CED-13505E32C07D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelModel", "LevelModel\LevelModel.csproj", "{0E4542DD-030D-89F6-3CED-13505E32C07D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsers", "..\BlockEditor\Parsers\Parsers.csproj", "{C87BE93B-11E3-3DEC-C95C-614BDB0CCD69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parsers", "Parsers\Parsers.csproj", "{C87BE93B-11E3-3DEC-C95C-614BDB0CCD69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTool", "..\BlockEditor\MultiTool\MultiTool.csproj", "{0A8E5D3B-4D4B-5ABA-54D2-4430D7AE0451}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTool", "MultiTool\MultiTool.csproj", "{0A8E5D3B-4D4B-5ABA-54D2-4430D7AE0451}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		Notes.txt = Notes.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{08C13279-0B53-419B-907D-8505715179EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +61,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C93658AE-70FC-4863-90C8-DCE93B1CC4D1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{14DC63A5-54D3-9A24-79BD-52368895862C} = {08C13279-0B53-419B-907D-8505715179EC}
+		{915C55DD-0DF1-A9AE-255E-B2AF78EEDB12} = {08C13279-0B53-419B-907D-8505715179EC}
+		{1AD7D3AB-DE7C-69AB-10C0-876097625BB9} = {08C13279-0B53-419B-907D-8505715179EC}
+		{0E4542DD-030D-89F6-3CED-13505E32C07D} = {08C13279-0B53-419B-907D-8505715179EC}
+		{C87BE93B-11E3-3DEC-C95C-614BDB0CCD69} = {08C13279-0B53-419B-907D-8505715179EC}
+		{0A8E5D3B-4D4B-5ABA-54D2-4430D7AE0451} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {87E7EEEE-CF2B-4168-B9C7-469E8EE8B38B}
