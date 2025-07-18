@@ -6,7 +6,7 @@ namespace MultiTool.DataStructures.Constants
     public class Constants
     {
 
-        public const string APPLICATION_VERSION = "5.3";
+        public const string APPLICATION_VERSION = "5.4";
 
         public const string LINK_TO_TUTORIALS = "https://youtu.be/16HxTywHVWM";
 

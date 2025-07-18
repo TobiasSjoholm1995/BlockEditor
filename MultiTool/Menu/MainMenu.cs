@@ -48,9 +48,8 @@ namespace MultiTool.Menu
 
         private void ShowIntroText()
         {
-            WriteLine("This is a multi-tool for Platform Racing 2!" + Environment.NewLine);
+            WriteLine("This is the Multi-Tool version " + Constants.APPLICATION_VERSION + Environment.NewLine);
             WriteLine("User folder:  " + MyPaths.USER_FOLDER + Environment.NewLine);
-            WriteLine("Tutorial videos:  " + Constants.LINK_TO_TUTORIALS + Environment.NewLine);
         }
 
         private void ShowOptions()
