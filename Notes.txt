@@ -5,3 +5,5 @@ This make sure that the user dont have to install the .NET Core runtime.
 Maybe in the future we can migrate the codebase to .NET 9?
 External libraries like SkiaSharp might cause some issues.
 
+To see the HTTPS request made by the local PR2 client, tools like Fiddler can be used.
+Make sure to enable the HTTPS decryption in Fiddler.
