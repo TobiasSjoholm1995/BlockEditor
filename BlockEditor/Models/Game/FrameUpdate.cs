@@ -64,7 +64,7 @@ namespace BlockEditor.Models
             cam.TransX = -_game.Camera.Position.X;
             cam.TransY = -_game.Camera.Position.Y;
             cam.ScaleX = cam.ScaleY = zoom;
-            canvas.Concat(ref cam);
+            canvas.Concat(cam);
 
             // draw strokes
             _game.Map.Renderer.RenderArt(canvas, art);
@@ -92,7 +92,7 @@ namespace BlockEditor.Models
             }
 
             SKMatrix inverted = cam.Invert();
-            canvas.Concat(ref inverted);
+            canvas.Concat(inverted);
         }
 
         private void DrawBlocks()
