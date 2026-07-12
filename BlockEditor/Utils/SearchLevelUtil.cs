@@ -28,7 +28,7 @@ namespace BlockEditor.Utils
 
             try
             {
-                var levelInfo = PR2Parser.Level(data);
+                var levelInfo = PR2Parser.Level(string.Empty, data);
 
                 if (levelInfo?.Messages?.Where(m => m != null).Any() == true)
                 {
@@ -73,13 +73,13 @@ namespace BlockEditor.Utils
                 if (l == null)
                     continue;
 
-                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating);
+                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating, info.Domain);
             }
         }
 
-        public static IEnumerable<SearchResult> SearchNewest(int page)
+        public static IEnumerable<SearchResult> SearchNewest(string domain, int page)
         {
-            var data = PR2Accessor.Newest(page);
+            var data = PR2Accessor.Newest(domain, page);
 
             if (IsSlowDownResponse(data))
             {
@@ -94,13 +94,13 @@ namespace BlockEditor.Utils
                 if (l == null)
                     continue;
 
-                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating);
+                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating, domain);
             }
         }
 
-        public static IEnumerable<SearchResult> SearchBestWeek(int page)
+        public static IEnumerable<SearchResult> SearchBestWeek(string domain, int page)
         {
-            var data = PR2Accessor.BestWeek(page);
+            var data = PR2Accessor.BestWeek(domain, page);
 
             if (IsSlowDownResponse(data))
             {
@@ -115,11 +115,11 @@ namespace BlockEditor.Utils
                 if (l == null)
                     continue;
 
-                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating);
+                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating, domain);
             }
         }
 
-        public static IEnumerable<SearchResult> SearchMyLevels()
+        public static IEnumerable<SearchResult> SearchMyLevels(string domain)
         {
             if (!Users.IsLoggedIn())
             {
@@ -127,7 +127,7 @@ namespace BlockEditor.Utils
                 yield break;
             }
 
-            var data = PR2Accessor.LoadMyLevels(Users.Current.Token);
+            var data = PR2Accessor.LoadMyLevels(domain, Users.Current.Token);
 
             if (IsSlowDownResponse(data))
             {
@@ -142,17 +142,17 @@ namespace BlockEditor.Utils
                 if (l == null)
                     continue;
 
-                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating);
+                yield return new SearchResult(l.LevelID, l.Title, l.UserName, l.PlayCount, l.Rating, domain);
             }
         }
 
-        public static IEnumerable<SearchResult> SearchByLevelId(int id, Action closeWindow, Action<Level> OnSelectedLevel)
+        public static IEnumerable<SearchResult> SearchByLevelId(string domain, int id, Action closeWindow, Action<Level> OnSelectedLevel)
         {
             SearchResult result = null;
 
             try
             {
-                var data = PR2Accessor.Download(id);
+                var data = PR2Accessor.Download(domain, id);
 
                 if (string.IsNullOrWhiteSpace(data))
                     yield break;
@@ -163,7 +163,7 @@ namespace BlockEditor.Utils
                 }
                 else
                 {
-                    var levelInfo = PR2Parser.Level(data);
+                    var levelInfo = PR2Parser.Level(domain, data);
 
                     if (levelInfo.Messages.Any())
                     {

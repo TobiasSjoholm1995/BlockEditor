@@ -65,7 +65,7 @@ namespace BlockEditor.Views.Windows
         {
             var blocks = map.Blocks.GetBlocks(true).GroupBy(b => b.ID);
 
-            for (int i = Block.BASIC_BROWN; i <= Block.MaxBlockId; i++)
+            for (int i = Block.BASIC_BROWN; i <= Block.MaxBlockId_Trapwork; i++)
             {
                 var count = blocks.Where(g => g.Key == i).FirstOrDefault()?.Count() ?? 0;
                 var name = Block.GetBlockName(i);

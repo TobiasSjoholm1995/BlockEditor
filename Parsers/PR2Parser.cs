@@ -9,7 +9,7 @@ namespace Parsers
     public static class PR2Parser
     {
 
-        public static LevelDTO Level(string data) => new LevelParser(data).Result;
+        public static LevelDTO Level(string domain, string data) => new LevelParser(domain, data).Result;
 
         public static List<SearchResultLevel> SearchResult(string result) => new SearchResultParser(result).Levels;
 

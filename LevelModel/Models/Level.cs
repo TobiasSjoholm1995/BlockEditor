@@ -9,6 +9,7 @@ namespace LevelModel.Models
     public class Level : BaseLevel
     {
 
+        public string FetchedFromDomian { get; set; }
 
         public double UserID { get; set; }
 

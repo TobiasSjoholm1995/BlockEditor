@@ -43,7 +43,7 @@ namespace BlockEditor.Views.Windows
                     continue;
 
                 var item = new ComboBoxItem();
-                item.Content = user.Name + " (" + new Uri(user.Domain).Host +")";
+                item.Content = user.Name + " (" + user.Domain +")";
                 item.Tag = user;
 
                 cbUsers.Items.Add(item);
@@ -54,13 +54,6 @@ namespace BlockEditor.Views.Windows
             if (cbUsers.SelectedIndex != index)
             {
                 cbUsers.SelectedIndex = index;
-
-                var domain = (cbUsers.SelectedValue as User)?.Domain;
-
-                if(!string.IsNullOrWhiteSpace(domain))
-                {
-                    Domain.Current = domain;
-                }
             }
         }
 

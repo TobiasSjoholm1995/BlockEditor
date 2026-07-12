@@ -59,9 +59,7 @@ namespace BlockEditor.Models
 
     public static class Users
     {
-
-        private static User _current;
-        public static User Current { get { return _current;  } set { _current = value; Domain.Current = value?.Domain; } }
+        public static User Current { get; set; }
 
         public static List<User> AllUsers { get; } = new List<User>();
 
@@ -139,13 +137,13 @@ namespace BlockEditor.Models
             Current = null;
         }
 
-        private static string GetBuildVersion()
+        private static string GetBuildVersion(string domain)
         {
             var errorMsg = "Failed to fetch the PR2 Build version";
 
             try
             {
-                var version = PR2Accessor.Pr2Version().BuildVersion;
+                var version = PR2Accessor.Pr2Version(domain).BuildVersion;
 
                 if (version != null)
                     return version;
@@ -165,13 +163,12 @@ namespace BlockEditor.Models
 
             try
             {
-                var tokenInfo = PR2Accessor.GetToken(username, password, domain, GetBuildVersion());
+                var tokenInfo = PR2Accessor.GetToken(username, password, domain, GetBuildVersion(domain));
 
                 if (tokenInfo.Success)
                 {
                     errorMsg = string.Empty;
                     Add(username, tokenInfo.Token, domain);
-                    DataAccess.Domain.Current = domain;
                 }
                 else
                 {

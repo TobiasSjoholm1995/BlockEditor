@@ -1,10 +1,11 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using DataAccess;
 using MultiTool.DataStructures.Constants;
 using MultiTool.Handlers;
 using MultiTool.Handlers.FileHandlers;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MultiTool.Menu.Options.Settings.Options.UserSettingsOptions.Options.AddUserOptions
 {
@@ -124,7 +125,7 @@ namespace MultiTool.Menu.Options.Settings.Options.UserSettingsOptions.Options.Ad
             if(!IsInputValid)
                 return string.Empty;
 
-            var token = _accessor.GetToken(_username, pass, DataAccess.Domain.Current, version, out var errorMsg);
+            var token = _accessor.GetToken(_username, pass, Domain.Pr2Hub, version, out var errorMsg);
 
             if (!string.IsNullOrWhiteSpace(errorMsg))
             {

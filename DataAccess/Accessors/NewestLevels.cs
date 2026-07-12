@@ -8,9 +8,9 @@ namespace DataAccess.Accessors
 
 
         public string Result { get; set; }
-        internal NewestLevels(int page)
+        internal NewestLevels(string domain, int page)
         {
-            string searchLink = Domain.Current + "/files/lists/newest/";
+            string searchLink = domain + "/files/lists/newest/";
 
             string link = searchLink 
                         + page.ToString(CultureInfo.InvariantCulture) 

@@ -16,7 +16,7 @@ namespace DataAccess.Accessors
 
             string searchQuery = GetSearchQuery(info);
 
-            Access(Domain.Current + "/search_levels.php?", searchQuery);
+            Access(info.Domain + "/search_levels.php?", searchQuery);
         }
 
         private string GetDirection(SearchDirectionEnum dir)

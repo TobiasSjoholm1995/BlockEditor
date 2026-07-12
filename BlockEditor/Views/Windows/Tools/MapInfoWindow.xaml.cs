@@ -312,7 +312,13 @@ namespace BlockEditor.Views.Windows
         {
             try
             {
-                var info = PR2Accessor.GetUser((uint)_map.Level.UserID);
+                if(string.IsNullOrWhiteSpace(_map?.Level?.FetchedFromDomian))
+                {
+                    MessageUtil.ShowInfo("User not found as domain is unknown.");
+                    return;
+                }
+
+                var info = PR2Accessor.GetUser(_map?.Level?.FetchedFromDomian, (uint)_map.Level.UserID);
 
                 if(string.IsNullOrEmpty(info?.Name))
                 {

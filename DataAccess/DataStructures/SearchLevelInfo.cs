@@ -11,6 +11,7 @@ namespace DataAccess.DataStructures
 
 
         public string SearchValue { get; set; }
+        public string Domain { get; set; }
         public SearchModeEnum Mode { get; set; }
         public SearchOrderEnum Order { get; set; }
         public SearchDirectionEnum Direction { get; set; }
@@ -19,9 +20,10 @@ namespace DataAccess.DataStructures
         public int Page { get; set; }
 
 
-        public SearchLevelInfo(string value, int page)
+        public SearchLevelInfo(string value, string domain, int page)
         {
             SearchValue = value ?? string.Empty;
+            Domain = domain ?? string.Empty;
             Mode = SearchModeEnum.User;
             Order = SearchOrderEnum.Date;
             Direction = SearchDirectionEnum.Descending;

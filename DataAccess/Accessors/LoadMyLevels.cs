@@ -8,9 +8,9 @@ namespace DataAccess.Accessors
 
 
 
-        internal LoadMyLevels(string token)
+        internal LoadMyLevels(string domain, string token)
         {
-            string loadLink  = Domain.Current + "/levels_get.php?";
+            string loadLink  = domain + "/levels_get.php?";
             string loadQuery = GetSearchQuery(token);
 
             Access(loadLink, loadQuery);

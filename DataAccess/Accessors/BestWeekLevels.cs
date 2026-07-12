@@ -9,9 +9,9 @@ namespace DataAccess.Accessors
 
         public string Result { get; set; }
 
-        internal BestWeekLevels(int page)
+        internal BestWeekLevels(string domain, int page)
         {
-            string searchLink = Domain.Current + "/files/lists/best_week/";
+            string searchLink = domain + "/files/lists/best_week/";
 
             string link = searchLink
                         + page.ToString(CultureInfo.InvariantCulture)

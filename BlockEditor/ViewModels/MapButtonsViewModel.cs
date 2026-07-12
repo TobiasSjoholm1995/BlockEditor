@@ -64,13 +64,13 @@ namespace BlockEditor.ViewModels
             OnLoadMap?.Invoke(map);
         }
 
-        private void LoadLevel(int id, bool unpublished)
+        private void LoadLevel(string domain, int id, bool unpublished)
         {
             using(new TempCursor(Cursors.Wait))
             {
                 try
                 {
-                    var data = PR2Accessor.Download(id);
+                    var data = PR2Accessor.Download(domain, id);
 
                     if (string.IsNullOrWhiteSpace(data))
                     {
@@ -78,7 +78,7 @@ namespace BlockEditor.ViewModels
                         return;
                     }
 
-                    var levelInfo = PR2Parser.Level(data);
+                    var levelInfo = PR2Parser.Level(domain,data);
 
                     if (levelInfo == null)
                     {
@@ -120,7 +120,7 @@ namespace BlockEditor.ViewModels
                 return;
 
             if(window.SelectedLevel == null)
-                LoadLevel(window.SelectedLevelID, window.Unpublish);
+                LoadLevel(window.SelectedDomain, window.SelectedLevelID, window.Unpublish);
             else
             {
                 if(window.Unpublish)

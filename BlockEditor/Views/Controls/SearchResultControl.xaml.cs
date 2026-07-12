@@ -9,9 +9,11 @@ namespace BlockEditor.Views.Controls
     public partial class SearchResultControl : UserControl
     {
 
-        public event Action<int> OnSelectedLevel;
+        public event Action<string, int> OnSelectedLevel;
 
         private int _id;
+        private string _domain;
+
 
         public SearchResultControl(SearchResult result)
         {
@@ -21,6 +23,7 @@ namespace BlockEditor.Views.Controls
                 throw new ArgumentNullException("level");
 
             _id = result.ID;
+            _domain = result.Domain;
             btnTitle.Content = result.Title;
             btnTitle.ToolTip = result.GetToolTip();
         }
@@ -32,7 +35,7 @@ namespace BlockEditor.Views.Controls
 
         public void InvokeSelectedLevel()
         {
-            OnSelectedLevel?.Invoke(_id);
+            OnSelectedLevel?.Invoke(_domain, _id);
         }
 
     }

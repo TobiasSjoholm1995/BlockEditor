@@ -62,7 +62,7 @@ namespace Parsers.Parsers
 
         protected void buildParser()
         {
-            _parser.Add("level_id",     (x, l) => l.LevelID   = ParseInt(x));
+            _parser.Add("level_id",     (x, l) => l.LevelID   = ParseLevelID(x));
             _parser.Add("live",         (x, l) => l.Published = ParseBool(x));
             _parser.Add("min_level",    (x, l) => l.RankLimit = ParseInt(x));
             _parser.Add("name",         (x, l) => l.UserName  = ParsePr2Text(x));
@@ -88,6 +88,17 @@ namespace Parsers.Parsers
             string errorMessage = _jsonInput?.GetValue("error")?.ToString() ?? "Input data is invalid, parsing canceled.";
 
             throw new InvalidDataException(errorMessage);
+        }
+
+        private int ParseLevelID(string s)
+        {
+            if (s == null)
+                return ERROR;
+
+            if (s.StartsWith("8p_", StringComparison.InvariantCultureIgnoreCase))
+                s = s.Substring(3);
+
+            return ParseInt(s);
         }
 
 

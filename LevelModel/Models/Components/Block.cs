@@ -53,8 +53,18 @@ namespace LevelModel.Models.Components
         public const int CUSTOM_STATS   = 131;
         public const int TELEPORT       = 132;
 
+        // 8p trapwork.org
+        public const int MUD           = 150;
+        public const int FREEZE        = 151;
+        public const int LEFT_ONE_WAY  = 152;
+        public const int RIGHT_ONE_WAY = 153;
+        public const int TOP_ONE_WAY   = 154;
+        public const int DOWN_ONE_WAY  = 155;
+        public const int BASIC_UNSAFE  = 156;
 
-        public static readonly int MaxBlockId = TELEPORT;
+
+        public static readonly int MaxBlockId_Pr2Hub = TELEPORT;
+        public static readonly int MaxBlockId_Trapwork = BASIC_UNSAFE;
 
 
         public int X { get; set; }
@@ -79,7 +89,10 @@ namespace LevelModel.Models.Components
             if (id == null)
                 return false;
 
-            if (id >= BASIC_BROWN && id <= MaxBlockId)
+            if (id >= BASIC_BROWN && id <= MaxBlockId_Pr2Hub)
+                return true;
+
+            if (id >= MUD && id <= MaxBlockId_Trapwork)
                 return true;
 
             return false;
@@ -139,6 +152,15 @@ namespace LevelModel.Models.Components
                 case EGG:            return "Egg Minion";
                 case CUSTOM_STATS:   return "Custom Stats";
                 case TELEPORT:       return "Teleport";
+                case BASIC_UNSAFE: return "Basic Unsafe";
+                case TOP_ONE_WAY: return "Top One-Way";
+                case RIGHT_ONE_WAY: return "Right One-Way";
+                case DOWN_ONE_WAY: return "Down One-Way";   
+                case LEFT_ONE_WAY: return "Left One-Way";
+                case MUD: return "Mud";
+                case FREEZE: return "Freeze";
+                //case BASIC_PILLAR: return "Basic Pillar";
+
 
 
                 default: return "Unknown Block";

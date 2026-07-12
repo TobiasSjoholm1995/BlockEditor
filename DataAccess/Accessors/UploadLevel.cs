@@ -8,14 +8,14 @@ namespace DataAccess.Accessors
 
         private const string StatusExist = "status=exists";
 
-        internal UploadLevel(string levelData, Action<LevelExistArg> onLevelExist)
+        internal UploadLevel(string domain, string levelData, Action<LevelExistArg> onLevelExist)
         {
             var arg = new LevelExistArg();;
 
             do
             {
                 arg = new LevelExistArg();
-                Access(Domain.Current + "/upload_level.php", levelData);
+                Access(domain + "/upload_level.php", levelData);
 
                 if (IsStatusExist(Result))
                 {

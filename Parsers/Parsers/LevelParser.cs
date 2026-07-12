@@ -19,12 +19,13 @@ namespace Parsers.Parsers
         private const string HAS_PASSWORD = "1";
 
 
-        internal LevelParser(string data)
+        internal LevelParser(string domain, string data)
         {
             Result = new LevelDTO();
 
             BuildAttributeParser();
             ParseAttributes(data, true);
+            Result.Level.FetchedFromDomian = domain;
         }
 
 

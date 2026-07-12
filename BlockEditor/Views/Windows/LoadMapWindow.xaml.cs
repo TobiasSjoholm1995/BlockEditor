@@ -15,6 +15,7 @@ using System.Windows.Input;
 using static BlockEditor.Utils.SearchLevelUtil;
 using static DataAccess.DataStructures.SearchLevelInfo;
 using static BlockEditor.Models.MySearch;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace BlockEditor.Views.Windows
 {
@@ -29,6 +30,7 @@ namespace BlockEditor.Views.Windows
         private const string NOT_FOUND = "404 Not Found";
         private static readonly MySearch _lastSearch = new MySearch();
         public int SelectedLevelID { get; private set; }
+        public string SelectedDomain { get; private set; }
         public Level SelectedLevel { get; private set; }
         public bool Unpublish { get; private set; }
 
@@ -37,6 +39,7 @@ namespace BlockEditor.Views.Windows
             _initDone = false;
             Unpublish = true;
             InitializeComponent();
+            AddDomains();
             AddSearchByItems();
             AddSearchModeItems();
             AddSearchOrderItems();
@@ -48,6 +51,26 @@ namespace BlockEditor.Views.Windows
             _initDone = true;
         }
 
+        private void AddDomains()
+        {
+            var index = 0;
+            var selectedIndex = index;
+
+            foreach(var domain in DataAccess.Domain.All)
+            {
+                var item = new ComboBoxItem();
+                item.Content = new Uri(domain).Host;
+                item.Tag = domain;
+                DomainComboBox.Items.Add(item);
+
+                if(string.Equals(Users.Current?.Domain, domain, StringComparison.InvariantCultureIgnoreCase))
+                    selectedIndex = index;
+
+                index++;
+            }
+
+            DomainComboBox.SelectedIndex = selectedIndex;
+        }
 
         private void AddSearchModeItems()
         {
@@ -173,7 +196,9 @@ namespace BlockEditor.Views.Windows
         private SearchLevelInfo GetSearchInfo()
         {
             var value = searchTextbox.Text;
-            var info  = new SearchLevelInfo(value, _page);
+            var domain = (DomainComboBox.SelectedValue as ComboBoxItem)?.Tag as string;
+
+            var info  = new SearchLevelInfo(value, domain, _page);
 
             info.Order     = (SearchOrderEnum)OrderComboBox.SelectedIndex;
             info.Direction = (SearchDirectionEnum)SearchDirectionComobBox.SelectedIndex;
@@ -198,6 +223,7 @@ namespace BlockEditor.Views.Windows
                 _lastSearch.Order = info.Order;
                 _lastSearch.Direction = info.Direction;
                 _lastSearch.SearchValue = value;
+                _lastSearch.SearchDomain = domain;
                 _lastSearch.SearchType = _searchBy;
                 _lastSearch.Save();
             }
@@ -237,11 +263,11 @@ namespace BlockEditor.Views.Windows
                             if (id == null)
                                 errorText.Content = "Invalid Level ID";
                             else
-                                AddSearchResults(SearchByLevelId(id.Value, Close, OnSelectedLevel));
+                                AddSearchResults(SearchByLevelId(searchInfo.Domain, id.Value, Close, OnSelectedLevel));
                             break;
 
                         case SearchBy.MyLevels:
-                            AddSearchResults(SearchMyLevels());
+                            AddSearchResults(SearchMyLevels(searchInfo.Domain));
                             break;
 
                         case SearchBy.LocalFile:
@@ -249,11 +275,11 @@ namespace BlockEditor.Views.Windows
                             break;
 
                         case SearchBy.Newest:
-                            AddSearchResults(SearchNewest(_page));
+                            AddSearchResults(SearchNewest(searchInfo.Domain,_page));
                             break;
 
                         case SearchBy.BestWeek:
-                            AddSearchResults(SearchBestWeek(_page));
+                            AddSearchResults(SearchBestWeek(searchInfo.Domain, _page));
                             break;
 
                         case SearchBy.GetLastSearch:
@@ -264,6 +290,7 @@ namespace BlockEditor.Views.Windows
                             OrderComboBox.SelectedIndex = (int)_lastSearch.Order;
                             SearchDirectionComobBox.SelectedIndex = (int)_lastSearch.Direction;
                             searchTextbox.Text = _lastSearch.SearchValue;
+                            DomainComboBox.SelectedIndex = string.IsNullOrWhiteSpace(_lastSearch.SearchDomain) ? 0 :  DataAccess.Domain.All.FindIndex(x => string.Equals(x, _lastSearch.SearchDomain, StringComparison.InvariantCultureIgnoreCase));
                             SearchByComboBox.SelectedItem = GetSearchByItem(_lastSearch.SearchType);
                             _page = _lastSearch.Page;
                             _disableSearch = false;
@@ -306,6 +333,10 @@ namespace BlockEditor.Views.Windows
             UpdateButtons();
             searchTextbox.Focus();
 
+            if(_searchBy == SearchBy.MyLevels && Users.IsLoggedIn())
+            {
+                DomainComboBox.SelectedIndex = string.IsNullOrWhiteSpace(Users.Current?.Domain) ? 0 : DataAccess.Domain.All.FindIndex(x => string.Equals(x, Users.Current?.Domain, StringComparison.InvariantCultureIgnoreCase));
+            }
 
             if (_searchBy == SearchBy.MyLevels 
                          || _searchBy == SearchBy.LocalFile
@@ -353,6 +384,7 @@ namespace BlockEditor.Views.Windows
             if(ctrl && e.Key == Key.M && Users.IsLoggedIn())
             {
                 SearchByComboBox.SelectedItem = GetSearchByItem(SearchBy.MyLevels);
+                DomainComboBox.SelectedIndex = string.IsNullOrWhiteSpace(Users.Current?.Domain) ? 0 : DataAccess.Domain.All.FindIndex(x => string.Equals(x, Users.Current?.Domain, StringComparison.InvariantCultureIgnoreCase));
             }
             else if (ctrl && e.Key == Key.N)
             {
@@ -447,9 +479,10 @@ namespace BlockEditor.Views.Windows
             }
         }
 
-        private void OnSelectedLevel(int id)
+        private void OnSelectedLevel(string domain, int id)
         {
             SelectedLevelID = id;
+            SelectedDomain = domain;
             Unpublish = _searchBy != SearchBy.MyLevels;
 
             Close(true);
@@ -458,7 +491,7 @@ namespace BlockEditor.Views.Windows
         private void OnSelectedLevel(Level level)
         {
             SelectedLevel = level;
-            OnSelectedLevel(level.LevelID);
+            OnSelectedLevel(level.FetchedFromDomian, level.LevelID);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -471,6 +504,7 @@ namespace BlockEditor.Views.Windows
             searchTextbox.Focus();
             Search_Click(null, null);
         }
+
 
         #endregion
 

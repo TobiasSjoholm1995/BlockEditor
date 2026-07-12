@@ -8,10 +8,10 @@ namespace DataAccess.Accessors
 
         public VersionInfo Info { get; private set; }
 
-        public VersionFetcher()
+        public VersionFetcher(string domain)
         {
             Info = new VersionInfo();
-            var path = Domain.Current + "/version.txt";
+            var path = domain + "/version.txt";
             var data = GetAccessor.Download(path);
             Parse(data);
         }
@@ -48,10 +48,13 @@ namespace DataAccess.Accessors
 
             public UserInfo Info { get; private set; }
 
-            public UserFetcher(uint id)
+            public UserFetcher(string domain, uint id)
             {
+                if (string.IsNullOrWhiteSpace(domain))
+                    return;
+
                 Info = new UserInfo();
-                var path = Domain.Current + "/get_player_info.php?user_id=" + id;
+                var path = domain + "/get_player_info.php?user_id=" + id;
                 var data = GetAccessor.Download(path);
                 Parse(data);
             }

@@ -26,7 +26,7 @@ namespace DataAccess.Accessors
             Result = new TokenInfo();
 
             var content  = GetContent(username, password, version);
-            var response = Post(domain + "/login.php", content).Result;
+            var response = Post(domain, domain + "/login.php", content).Result;
 
             ParseResponse(response);
         }
@@ -93,10 +93,10 @@ namespace DataAccess.Accessors
             return Convert.ToBase64String(encrypted);
         }
        
-        private async Task<string> Post(string url, Dictionary<string, string> values)
+        private async Task<string> Post(string domain, string url, Dictionary<string, string> values)
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Referer", Domain.Current + "/");
+            client.DefaultRequestHeaders.Add("Referer", domain + "/");
 
             var content  = new FormUrlEncodedContent(values);
             var response = await client.PostAsync(url, content).ConfigureAwait(false);

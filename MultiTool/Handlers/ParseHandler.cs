@@ -13,7 +13,7 @@ namespace MultiTool.Handlers
 
         internal Level Parse(string levelData) {
             try {
-                var result = PR2Parser.Level(levelData);
+                var result = PR2Parser.Level(string.Empty, levelData);
                 ShowMessages(result.Messages);
                 return result.Level;
             }

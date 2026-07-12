@@ -42,7 +42,7 @@ namespace MultiTool.Handlers
         {
             try
             {
-                return PR2Accessor.Pr2Version();
+                return PR2Accessor.Pr2Version(Domain.Pr2Hub);
             }
             catch (Exception ex) { ShowExceptionToUser(ex); return null; }
         }
@@ -50,7 +50,7 @@ namespace MultiTool.Handlers
         {
             try
             {
-                string levelData = PR2Accessor.Download(levelID);
+                string levelData = PR2Accessor.Download(Domain.Pr2Hub, levelID);
 
                 if (string.IsNullOrWhiteSpace(levelData))
                 {
@@ -82,7 +82,7 @@ namespace MultiTool.Handlers
                 WriteLine(Environment.NewLine + "\tUploading...");
                 var levelData    = ConvertToPr2(level);
                 var onLevelExist = OnLevelExist(level);
-                var response     = PR2Accessor.Upload(levelData, onLevelExist);
+                var response     = PR2Accessor.Upload(Domain.Pr2Hub, levelData, onLevelExist);
 
                 if (!string.IsNullOrWhiteSpace(response))
                     WriteLine(Environment.NewLine + "\tResponse from server: \"" + response + "\"");
@@ -94,7 +94,7 @@ namespace MultiTool.Handlers
         {
             try
             {
-                string result = PR2Accessor.Search(new SearchLevelInfo(userToSearch, page));
+                string result = PR2Accessor.Search(new SearchLevelInfo(Domain.Pr2Hub,userToSearch, page));
 
                 if (string.IsNullOrWhiteSpace(result))
                     WriteLine(Environment.NewLine + "\tNo levels found!", ErrorColor);
@@ -110,7 +110,7 @@ namespace MultiTool.Handlers
         {
             try
             {
-                string result = PR2Accessor.LoadMyLevels(UserSettingsHandler.CurrentUser.Token);
+                string result = PR2Accessor.LoadMyLevels(Domain.Pr2Hub, UserSettingsHandler.CurrentUser.Token);
 
                 if (result == null || result.Length == 0)
                     WriteLine(Environment.NewLine + "\tNo levels found!", ErrorColor);

@@ -97,7 +97,7 @@ namespace BlockEditor.Helpers
 
                     var data = map.ToPr2String(Users.Current.Name, Users.Current.Token, publish, false, newest);
 
-                    var msg = DataAccess.PR2Accessor.Upload(data, (arg) =>
+                    var msg = DataAccess.PR2Accessor.Upload(Users.Current.Domain, data, (arg) =>
                     {
                         AskToOverwrite(arg);
 

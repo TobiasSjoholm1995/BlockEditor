@@ -10,6 +10,7 @@ namespace BlockEditor.Models
     public class SearchResult
     {
         public int ID { get; set; }
+        public string Domain { get; set; }
         public string Title { get; set; }
 
         public string CreatedBy { get; set; }
@@ -40,16 +41,17 @@ namespace BlockEditor.Models
         }
 
 
-        public SearchResult(int id, string title, string createdBy, int? playCount, double? rating)
+        public SearchResult(int id, string title, string createdBy, int? playCount, double? rating, string domain)
         {
             ID = id;
             Title = title;
             CreatedBy = createdBy;
             PlayCount = playCount;
             Rating = rating;
+            Domain = domain;
         }
 
-        public static readonly SearchResult SLOW_DOWN = new SearchResult(int.MinValue, string.Empty, string.Empty, null, null);
+        public static readonly SearchResult SLOW_DOWN = new SearchResult(int.MinValue, string.Empty, string.Empty, null, null, null);
 
 
         public string GetToolTip()
@@ -78,6 +80,7 @@ namespace BlockEditor.Models
         public SearchBy SearchType { get; set; }
 
         public string SearchValue { get; set; }
+        public string SearchDomain { get; set; }
         public int Page { get; set; }
         public SearchOrderEnum Order { get; set; }
         public SearchDirectionEnum Direction { get; set; }
@@ -103,7 +106,7 @@ namespace BlockEditor.Models
 
                 var split = data.Split(_separator);
 
-                if (split.Length != 5)
+                if (split.Length != 6)
                     return;
 
                 if (MyUtil.TryParse(split[0], out var r0))
@@ -119,6 +122,8 @@ namespace BlockEditor.Models
 
                 if (MyUtil.TryParse(split[4], out var r4))
                     Direction = (SearchDirectionEnum)r4;
+
+                SearchDomain = split[5];
             }
             catch { } 
         }
@@ -160,6 +165,8 @@ namespace BlockEditor.Models
                 builder.Append((int)Order);
                 builder.Append(_separator);
                 builder.Append((int)Direction);
+                builder.Append(_separator);
+                builder.Append(SearchDomain);
 
                 MySettings.LastSearch = builder.ToString();
             }
