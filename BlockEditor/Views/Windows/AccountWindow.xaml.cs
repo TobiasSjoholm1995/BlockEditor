@@ -43,7 +43,7 @@ namespace BlockEditor.Views.Windows
                     continue;
 
                 var item = new ComboBoxItem();
-                item.Content = user.Name + " (" + user.Domain +")";
+                item.Content = user.Name + "  (" + new Uri(user.Domain).Host +")";
                 item.Tag = user;
 
                 cbUsers.Items.Add(item);
