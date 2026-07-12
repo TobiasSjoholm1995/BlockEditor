@@ -6,14 +6,14 @@ namespace DataAccess.Accessors
     {
 
 
-        private static string LOAD_LINK = Domain.Current + "/levels_get.php?";
 
 
         internal LoadMyLevels(string token)
         {
+            string loadLink  = Domain.Current + "/levels_get.php?";
             string loadQuery = GetSearchQuery(token);
 
-            Access(LOAD_LINK, loadQuery);
+            Access(loadLink, loadQuery);
         }
 
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace BlockEditor.Views.Windows
 {
@@ -16,6 +17,7 @@ namespace BlockEditor.Views.Windows
 
         private string UserName { get; set; }
         private string Password { get; set; }
+        private string UserDomain { get; set; }
 
         public AccountWindow()
         {
@@ -33,7 +35,7 @@ namespace BlockEditor.Views.Windows
 
             cbDomain.Items.Add(Domain.Pr2Hub);
             cbDomain.Items.Add(Domain.Trapwork);
-            cbDomain.SelectedItem = Domain.Current;
+            cbDomain.SelectedItem = null;
 
             foreach(var user in Users.AllUsers.OrderBy(u => u.Name))
             {
@@ -41,7 +43,7 @@ namespace BlockEditor.Views.Windows
                     continue;
 
                 var item = new ComboBoxItem();
-                item.Content = user.Name;
+                item.Content = user.Name + " (" + new Uri(user.Domain).Host +")";
                 item.Tag = user;
 
                 cbUsers.Items.Add(item);
@@ -57,7 +59,6 @@ namespace BlockEditor.Views.Windows
 
                 if(!string.IsNullOrWhiteSpace(domain))
                 {
-                    cbDomain.SelectedItem = domain;
                     Domain.Current = domain;
                 }
             }
@@ -76,10 +77,10 @@ namespace BlockEditor.Views.Windows
                 if(!(x is ComboBoxItem i))
                     continue;
 
-                if(!(i.Content is string name))
+                if(!(i.Tag is User user))
                         continue;
 
-                if(string.Equals(name, Users.Current.Name, System.StringComparison.InvariantCultureIgnoreCase))
+                if(string.Equals(user.Name, Users.Current.Name, StringComparison.InvariantCultureIgnoreCase) && string.Equals(user.Domain, Users.Current.Domain, StringComparison.InvariantCultureIgnoreCase))
                     item = i;
             }
 
@@ -108,7 +109,8 @@ namespace BlockEditor.Views.Windows
         private bool IsOK()
         {
             return !string.IsNullOrWhiteSpace(UserName)
-               && !string.IsNullOrEmpty(Password);
+               && !string.IsNullOrEmpty(Password)
+               && !string.IsNullOrWhiteSpace(UserDomain);
         }
 
         private void btnOk_Click(object sender, RoutedEventArgs e)
@@ -119,7 +121,7 @@ namespace BlockEditor.Views.Windows
                 {
                     Mouse.OverrideCursor = Cursors.Wait;
 
-                    var success = Users.Login(UserName, Password, out var errorMsg);
+                    var success = Users.Login(UserName, Password, UserDomain, out var errorMsg);
 
                     UpdateButtons();
 
@@ -194,8 +196,13 @@ namespace BlockEditor.Views.Windows
 
         private void cbDomain_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var domain = cbUsers.SelectedItem as string;
-            Domain.Current = domain;
+            var item = cbDomain.SelectedItem as string;
+
+            if (string.IsNullOrWhiteSpace(item))
+                return;
+            
+            UserDomain = item;
+            UpdateButtons();
         }
     }
 }

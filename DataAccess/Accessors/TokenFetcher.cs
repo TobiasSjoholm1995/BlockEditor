@@ -14,9 +14,6 @@ namespace DataAccess.Accessors
     class TokenFetcher
     {
 
-
-        private static string LOGIN_LINK = Domain.Current + "/login.php";
-
         private readonly byte[] AES_KEY = { 85, 74, 47, 106, 110, 70, 42, 119, 82, 48, 113, 82, 75, 47, 100, 72 };
         private readonly byte[] AES_IV  = { 38, 99, 57, 42, 121, 42, 53, 112, 61, 49, 85, 78, 120, 47, 84, 114 };
         private readonly string LOGIN_CODE = "eisjI1dHWG4vVTAtNjB0Xw";
@@ -24,12 +21,12 @@ namespace DataAccess.Accessors
         public TokenInfo Result { get; private set; }
 
 
-        internal TokenFetcher(string username, string password, string version)
+        internal TokenFetcher(string username, string password, string domain, string version)
         {
             Result = new TokenInfo();
 
             var content  = GetContent(username, password, version);
-            var response = Post(LOGIN_LINK, content).Result;
+            var response = Post(domain + "/login.php", content).Result;
 
             ParseResponse(response);
         }

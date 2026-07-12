@@ -9,9 +9,6 @@ namespace DataAccess.Accessors
     internal class SearchLevels : PostAccessor
     {
 
-        private static string SEARCH_LINK = Domain.Current + "/search_levels.php?";
-
-
         internal SearchLevels(SearchLevelInfo info)
         {
             if (info == null)
@@ -19,7 +16,7 @@ namespace DataAccess.Accessors
 
             string searchQuery = GetSearchQuery(info);
 
-            Access(SEARCH_LINK, searchQuery);
+            Access(Domain.Current + "/search_levels.php?", searchQuery);
         }
 
         private string GetDirection(SearchDirectionEnum dir)

@@ -15,14 +15,14 @@ namespace MultiTool.Handlers
         public static readonly string FAILED = string.Empty;
 
 
-        internal string GetToken(string username, string password, string version, out string errorMsg)
+        internal string GetToken(string username, string password, string version, string domain, out string errorMsg)
         {
             errorMsg = string.Empty;
             WriteLine(Environment.NewLine + "\tChecking password...");
 
             try
             {
-                var tokenInfo = PR2Accessor.GetToken(username, password, version);
+                var tokenInfo = PR2Accessor.GetToken(username, password, domain, version);
 
                 if (!tokenInfo.Success || string.IsNullOrWhiteSpace(tokenInfo.Token))
                 {

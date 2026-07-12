@@ -26,7 +26,7 @@ namespace BlockEditor.Models
            if(!IsValid())
                 return string.Empty;
 
-            return Name + Separator + Token;
+            return Name + Separator + Token + Separator + Domain;
         }
 
         public bool IsValid()
@@ -35,6 +35,9 @@ namespace BlockEditor.Models
                 return false;
 
             if (string.IsNullOrWhiteSpace(Token))
+                return false;
+
+            if (string.IsNullOrWhiteSpace(Domain))
                 return false;
 
             return true;
@@ -57,7 +60,8 @@ namespace BlockEditor.Models
     public static class Users
     {
 
-        public static User Current { get; set; }
+        private static User _current;
+        public static User Current { get { return _current;  } set { _current = value; Domain.Current = value?.Domain; } }
 
         public static List<User> AllUsers { get; } = new List<User>();
 
@@ -103,7 +107,7 @@ namespace BlockEditor.Models
             if(!u.IsValid())
                 return;
 
-            AllUsers.RemoveAll(x => string.Equals(x.Name, u.Name, StringComparison.InvariantCultureIgnoreCase));
+            AllUsers.RemoveAll(x => string.Equals(x.Name, u.Name, StringComparison.InvariantCultureIgnoreCase) && string.Equals(x.Domain, u.Domain, StringComparison.InvariantCultureIgnoreCase));
             MySettings.Save();
         }
 
@@ -154,19 +158,20 @@ namespace BlockEditor.Models
             }
         }
 
-        public static bool Login(string username, string password, out string errorMsg)
+        public static bool Login(string username, string password, string domain, out string errorMsg)
         {
             var fallbackError = "Failed to login.";
             Logout();
 
             try
             {
-                var tokenInfo = PR2Accessor.GetToken(username, password, GetBuildVersion());
+                var tokenInfo = PR2Accessor.GetToken(username, password, domain, GetBuildVersion());
 
                 if (tokenInfo.Success)
                 {
                     errorMsg = string.Empty;
-                    Add(username, tokenInfo.Token, DataAccess.Domain.Current);
+                    Add(username, tokenInfo.Token, domain);
+                    DataAccess.Domain.Current = domain;
                 }
                 else
                 {

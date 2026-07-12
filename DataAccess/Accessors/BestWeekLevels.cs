@@ -6,13 +6,14 @@ namespace DataAccess.Accessors
     internal class BestWeekLevels
     {
 
-        private static string SEARCH_LINK = Domain.Current + "/files/lists/best_week/";
 
         public string Result { get; set; }
 
         internal BestWeekLevels(int page)
         {
-            string link = SEARCH_LINK
+            string searchLink = Domain.Current + "/files/lists/best_week/";
+
+            string link = searchLink
                         + page.ToString(CultureInfo.InvariantCulture)
                         + GetSearchQuery();
 

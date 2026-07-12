@@ -6,12 +6,13 @@ namespace DataAccess.Accessors
     internal class NewestLevels 
     {
 
-        private static string SEARCH_LINK = Domain.Current + "/files/lists/newest/";
 
         public string Result { get; set; }
         internal NewestLevels(int page)
         {
-            string link = SEARCH_LINK 
+            string searchLink = Domain.Current + "/files/lists/newest/";
+
+            string link = searchLink 
                         + page.ToString(CultureInfo.InvariantCulture) 
                         + GetSearchQuery();
 

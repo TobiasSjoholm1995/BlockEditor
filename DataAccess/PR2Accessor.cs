@@ -11,7 +11,9 @@ namespace DataAccess
         public const string Pr2Hub   = "https://pr2hub.com";
         public const string Trapwork = "https://trapwork.org";
 
-        public static string Current { get; set; } = PR2Hub;
+        private static string _current = Pr2Hub;
+
+        public static string Current { get { return _current; } set { _current = string.IsNullOrWhiteSpace(value) ? Pr2Hub : value; } }
 
         public static void Toggle()
         {
@@ -41,7 +43,7 @@ namespace DataAccess
 
         public static UserInfo GetUser(uint id) => new UserFetcher(id).Info;
 
-        public static TokenInfo GetToken(string username, string password, string version) => new TokenFetcher(username, password, version).Result;
+        public static TokenInfo GetToken(string username, string password, string domain, string version) => new TokenFetcher(username, password, domain, version).Result;
 
     }
 }

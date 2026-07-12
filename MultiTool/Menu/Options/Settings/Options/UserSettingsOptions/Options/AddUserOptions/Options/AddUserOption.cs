@@ -124,7 +124,7 @@ namespace MultiTool.Menu.Options.Settings.Options.UserSettingsOptions.Options.Ad
             if(!IsInputValid)
                 return string.Empty;
 
-            var token = _accessor.GetToken(_username, pass, version, out var errorMsg);
+            var token = _accessor.GetToken(_username, pass, DataAccess.Domain.Current, version, out var errorMsg);
 
             if (!string.IsNullOrWhiteSpace(errorMsg))
             {
