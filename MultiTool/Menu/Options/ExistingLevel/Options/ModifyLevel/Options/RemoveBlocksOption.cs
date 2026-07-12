@@ -52,7 +52,7 @@ namespace MultiTool.Menu.Options.ExistingLevel.Options.ModifyLevel.Options
 
                 case MenuOptions.SPECIFIC_BLOCK:
                      ShowBlockIdPath(0);
-                    _info.DTO.BlockID = ReadInteger("Block ID:  ", Block.BASIC_WHITE, Block.MaxBlockId);
+                    _info.DTO.BlockID = ReadInteger("Block ID:  ", Block.BASIC_WHITE, Block.MaxBlockId_Pr2Hub);
                     break;
 
                 case MenuOptions.QUIT:

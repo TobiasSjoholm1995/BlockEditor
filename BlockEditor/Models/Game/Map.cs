@@ -83,14 +83,14 @@ namespace BlockEditor.Models
         }
 
 
-        public string ToPr2String(string username, string token, bool publish, bool overwrite, bool newest)
+        public string ToPr2String(string username, string token, bool publish, bool overwrite, bool newest, out bool hasOnlyOldBlocks)
         {
             ArtUtil.CreateRelativePosition(Level.TextArt0);
             ArtUtil.CreateRelativePosition(Level.TextArt1);
 
             try 
             { 
-                Level.Blocks = BlocksUtil.ToPr2Blocks(Blocks);
+                Level.Blocks = BlocksUtil.ToPr2Blocks(Blocks, out hasOnlyOldBlocks);
                 Level.Published = publish;
 
                 if (username == null || token == null)

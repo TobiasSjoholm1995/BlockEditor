@@ -123,7 +123,7 @@ namespace MultiTool.Menu.Options.ExistingLevel.Options.ModifyLevel.Options
                 ShowBlockIdPath(0);
 
             if (IsInputValid)
-                _info.DTO.BlockId = ReadInteger("Block ID:  ", Block.BASIC_BROWN, Block.MaxBlockId);
+                _info.DTO.BlockId = ReadInteger("Block ID:  ", Block.BASIC_BROWN, Block.MaxBlockId_Pr2Hub);
 
             if (IsInputValid)
                 _info.DTO.ArtBlockId = GetFakeArtId();

@@ -1,15 +1,16 @@
 ﻿using BlockEditor.Models;
+using BlockEditor.Utils;
 using BlockEditor.Views;
 using BlockEditor.Views.Windows;
 using DataAccess.DataStructures;
+using LevelModel.Models.Components;
+using SkiaSharp;
 using System;
 using System.Drawing;
 using System.IO;
-using System.Windows.Input;
 using System.Linq;
-using SkiaSharp;
-using BlockEditor.Utils;
-using LevelModel.Models.Components;
+using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BlockEditor.Helpers
 {
@@ -95,14 +96,27 @@ namespace BlockEditor.Helpers
                     if (string.Equals("m3", map.Level.DataVersion, StringComparison.InvariantCultureIgnoreCase))
                         map.Level.DataVersion = "m4";
 
-                    var data = map.ToPr2String(Users.Current.Name, Users.Current.Token, publish, false, newest);
+                    var data = map.ToPr2String(Users.Current.Name, Users.Current.Token, publish, false, newest, out bool hasOnlyOldBlocks);
+
+                    if(!hasOnlyOldBlocks && string.Equals(Users.Current?.Domain, DataAccess.Domain.Pr2Hub, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        var text = "The map contains newer blocks that is not supported on " + DataAccess.Domain.Pr2Hub
+                            + Environment.NewLine
+                            + "Do you wish to continue?";
+                        var result = UserQuestionWindow.Show(text, "Overwrite", false);
+
+                        if (result != UserQuestionWindow.QuestionResult.Yes)
+                            return;
+
+                    }
+
 
                     var msg = DataAccess.PR2Accessor.Upload(Users.Current.Domain, data, (arg) =>
                     {
                         AskToOverwrite(arg);
 
                         if (arg.TryAgain)
-                            arg.NewLevelData = map.ToPr2String(Users.Current.Name, Users.Current.Token, publish, true, newest);
+                            arg.NewLevelData = map.ToPr2String(Users.Current.Name, Users.Current.Token, publish, true, newest, out _);
                     });
 
                     if (msg != null && msg.Contains("message=", StringComparison.InvariantCultureIgnoreCase))
@@ -129,7 +143,7 @@ namespace BlockEditor.Helpers
                     map.Level.Title = Path.GetFileNameWithoutExtension(filepath);
                     App.MyMainWindow?.TitleChanged(map.Level.Title);
 
-                    var data = map.ToPr2String(string.Empty, string.Empty, false, false, false);
+                    var data = map.ToPr2String(string.Empty, string.Empty, false, false, false, out _);
 
                     File.WriteAllText(filepath, data);
 

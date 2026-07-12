@@ -77,7 +77,7 @@ namespace BlockEditor.Helpers
                 map.Level.TextArt0 = new List<TextArt>();
                 map.Level.TextArt00 = new List<TextArt>();
 
-                var content = map.ToPr2String(string.Empty, string.Empty, false, false, false);
+                var content = map.ToPr2String(string.Empty, string.Empty, false, false, false, out _);
                 var filepath = Path.GetTempPath() + Guid.NewGuid().ToString() + ".txt";
 
                 File.WriteAllText(filepath, content);

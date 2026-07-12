@@ -234,9 +234,11 @@ namespace BlockEditor.Helpers
             return blocks;
         }
 
-        public static List<Block> ToPr2Blocks(Blocks blocks)
+        public static List<Block> ToPr2Blocks(Blocks blocks, out bool hasOnlyOldBlocks)
         {
             var pr2Blocks = new List<Block>();
+            
+            hasOnlyOldBlocks = true;
 
             if (blocks == null)
                 return pr2Blocks;
@@ -249,6 +251,9 @@ namespace BlockEditor.Helpers
             {
                 if (b.IsEmpty())
                     continue;
+
+                if (b.ID > Block.MaxBlockId_Pr2Hub)
+                    hasOnlyOldBlocks = false;
 
                 var x = b.Position.Value.X - previousX;
                 var y = b.Position.Value.Y - previousY;
