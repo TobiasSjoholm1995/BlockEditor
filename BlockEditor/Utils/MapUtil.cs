@@ -104,7 +104,7 @@ namespace BlockEditor.Helpers
                             + Environment.NewLine
                             + Environment.NewLine
                             + "Do you wish to continue?";
-                        var result = UserQuestionWindow.Show(text, "Overwrite", false);
+                        var result = UserQuestionWindow.Show(text, "Save", false);
 
                         if (result != UserQuestionWindow.QuestionResult.Yes)
                             return;
