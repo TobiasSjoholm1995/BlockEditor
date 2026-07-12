@@ -105,7 +105,7 @@ namespace BlockEditor.Views.Windows
         private void SetBlockImageSize(double height = double.NaN)
         {
             var blockSize = GetBlockSize(height);
-            BlocksControl.Init(blockSize, 3);
+            BlocksControl.Init(blockSize, 4);
         }
 
         private void OnSelectedBlockId(int? id)
