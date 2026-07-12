@@ -6,7 +6,7 @@ namespace DataAccess.Accessors
     {
 
 
-        private const string LOAD_LINK = "https://pr2hub.com/levels_get.php?";
+        private static string LOAD_LINK = BaseUrl.Current + "/levels_get.php?";
 
 
         internal LoadMyLevels(string token)

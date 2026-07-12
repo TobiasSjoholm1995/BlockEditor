@@ -6,7 +6,7 @@ namespace DataAccess.Accessors
     internal class BestWeekLevels
     {
 
-        private const string SEARCH_LINK = "https://pr2hub.com/files/lists/best_week/";
+        private static string SEARCH_LINK = BaseUrl.Current + "/files/lists/best_week/";
 
         public string Result { get; set; }
 

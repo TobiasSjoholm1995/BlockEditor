@@ -6,7 +6,7 @@ namespace DataAccess.Accessors
     internal class NewestLevels 
     {
 
-        private const string SEARCH_LINK = "https://pr2hub.com/files/lists/newest/";
+        private static string SEARCH_LINK = BaseUrl.Current + "/files/lists/newest/";
 
         public string Result { get; set; }
         internal NewestLevels(int page)

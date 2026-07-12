@@ -11,7 +11,7 @@ namespace DataAccess.Accessors
         public VersionFetcher()
         {
             Info = new VersionInfo();
-            var path = "https://pr2hub.com/version.txt";
+            var path = BaseUrl.Current + "/version.txt";
             var data = GetAccessor.Download(path);
             Parse(data);
         }
@@ -51,7 +51,7 @@ namespace DataAccess.Accessors
             public UserFetcher(uint id)
             {
                 Info = new UserInfo();
-                var path = "https://pr2hub.com/get_player_info.php?user_id=" + id;
+                var path = BaseUrl.Current + "/get_player_info.php?user_id=" + id;
                 var data = GetAccessor.Download(path);
                 Parse(data);
             }

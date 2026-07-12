@@ -6,8 +6,8 @@ namespace DataAccess.Accessors
     internal class UploadLevel : PostAccessor
     {
 
-        private const string UploadLink    = "https://pr2hub.com/upload_level.php";
-        private const string StatusExist   = "status=exists";
+        private static string UploadLink    = BaseUrl.Current + "/upload_level.php";
+        private static string StatusExist   = "status=exists";
 
         internal UploadLevel(string levelData, Action<LevelExistArg> onLevelExist)
         {
