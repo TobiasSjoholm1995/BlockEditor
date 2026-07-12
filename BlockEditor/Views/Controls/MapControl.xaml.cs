@@ -254,12 +254,13 @@ namespace BlockEditor.Views.Controls
                 }
                 else if (IsSelectionKey(e, ctrl))
                 {
-                    ViewModel.Game.UserSelection.CreateSelection(ViewModel.Game.Map);
+                    if (e.Key != Key.Delete) 
+                        ViewModel.Game.UserSelection.CreateSelection(ViewModel.Game.Map);
 
                     if (e.Key == Key.X || e.Key == Key.Delete)
                         ViewModel.Game.DeleteBlocks(ViewModel.Game.UserSelection.MapRegion);
 
-                    ViewModel.Game.CleanUserMode(e.Key == Key.Delete, true);
+                    ViewModel.Game.CleanUserMode(false, true);
                 }
                 else if (ctrl && e.Key == Key.V)
                 {
