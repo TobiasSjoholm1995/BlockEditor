@@ -100,7 +100,8 @@ namespace BlockEditor.Helpers
 
                     if(!hasOnlyOldBlocks && string.Equals(Users.Current?.Domain, DataAccess.Domain.Pr2Hub, StringComparison.InvariantCultureIgnoreCase))
                     {
-                        var text = "The map contains newer blocks that is not supported on " + DataAccess.Domain.Pr2Hub
+                        var text = "The map contains newer blocks that is not supported on:  " + DataAccess.Domain.Pr2Hub
+                            + Environment.NewLine
                             + Environment.NewLine
                             + "Do you wish to continue?";
                         var result = UserQuestionWindow.Show(text, "Overwrite", false);
