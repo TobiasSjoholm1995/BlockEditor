@@ -265,13 +265,6 @@ namespace BlockEditor.Views.Windows
             {
                 SwitchTab(1);
             }
-            else if (ctrl && e.Key == Key.W)
-            {
-                var r = UserQuestionWindow.Show("Do you wish to close the current tab?", "Close", false);
-
-                if (r == UserQuestionWindow.QuestionResult.Yes)
-                    Tab_OnClose(CurrentTab);
-            }
             else
             {
                 CurrentMap.Map_OnPreviewKeyDown(e, ctrl);

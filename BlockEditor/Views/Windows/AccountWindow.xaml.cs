@@ -2,6 +2,7 @@
 using BlockEditor.Models;
 using DataAccess;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +29,11 @@ namespace BlockEditor.Views.Windows
         private void SetComboBoxUsers()
         {
             cbUsers.Items.Clear();
+            cbDomain.Items.Clear();
+
+            cbDomain.Items.Add(Domain.Pr2Hub);
+            cbDomain.Items.Add(Domain.Trapwork);
+            cbDomain.SelectedItem = Domain.Current;
 
             foreach(var user in Users.AllUsers.OrderBy(u => u.Name))
             {
@@ -44,7 +50,17 @@ namespace BlockEditor.Views.Windows
             var index = GetCurrentUserIndex();
 
             if (cbUsers.SelectedIndex != index)
+            {
                 cbUsers.SelectedIndex = index;
+
+                var domain = (cbUsers.SelectedValue as User)?.Domain;
+
+                if(!string.IsNullOrWhiteSpace(domain))
+                {
+                    cbDomain.SelectedItem = domain;
+                    Domain.Current = domain;
+                }
+            }
         }
 
         private int GetCurrentUserIndex()
@@ -171,9 +187,15 @@ namespace BlockEditor.Views.Windows
             if(user == null || !user.IsValid())
                 return;
 
-            Users.Add(user.Name, user.Token);
+            Users.Add(user.Name, user.Token, user.Domain);
             UpdateButtons();
             btnLogout.IsEnabled = true;
+        }
+
+        private void cbDomain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var domain = cbUsers.SelectedItem as string;
+            Domain.Current = domain;
         }
     }
 }

@@ -5,12 +5,13 @@ using static DataAccess.Accessors.VersionFetcher;
 
 namespace DataAccess
 {
-    public static class BaseUrl
+    public static class Domain
     {
-        public static string Current { get; private set;}
 
-        private const string Pr2Hub   = "https://pr2hub.com";
-        private const string Trapwork = "https://trapwork.org";
+        public const string Pr2Hub   = "https://pr2hub.com";
+        public const string Trapwork = "https://trapwork.org";
+
+        public static string Current { get; set; } = PR2Hub;
 
         public static void Toggle()
         {

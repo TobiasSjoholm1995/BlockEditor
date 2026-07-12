@@ -6,7 +6,7 @@ namespace DataAccess.Accessors
     {
 
 
-        private static string LOAD_LINK = BaseUrl.Current + "/levels_get.php?";
+        private static string LOAD_LINK = Domain.Current + "/levels_get.php?";
 
 
         internal LoadMyLevels(string token)

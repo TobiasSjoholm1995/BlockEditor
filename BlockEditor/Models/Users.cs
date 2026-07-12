@@ -17,6 +17,8 @@ namespace BlockEditor.Models
 
         public string Token { get; set; }
 
+        public string Domain { get; set; }
+
         private const string Separator = "#752814FGH9249#";
 
         public override string ToString()
@@ -45,10 +47,10 @@ namespace BlockEditor.Models
 
             var split = input.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
 
-            if(split == null || split.Length != 2)
+            if(split == null || split.Length != 3)
                 return null;
 
-            return new User { Name = split[0], Token = split[1] };
+            return new User { Name = split[0], Token = split[1], Domain = split[2] };
         }
     }
 
@@ -80,9 +82,9 @@ namespace BlockEditor.Models
                 Current = AllUsers.First();
         }
 
-        public static void Add(string name, string token)
+        public static void Add(string name, string token, string domain)
         {
-            var u = new User { Name = name, Token = token };
+            var u = new User { Name = name, Token = token, Domain = domain };
 
             if(u.IsValid())
             {
@@ -164,7 +166,7 @@ namespace BlockEditor.Models
                 if (tokenInfo.Success)
                 {
                     errorMsg = string.Empty;
-                    Add(username, tokenInfo.Token);
+                    Add(username, tokenInfo.Token, DataAccess.Domain.Current);
                 }
                 else
                 {

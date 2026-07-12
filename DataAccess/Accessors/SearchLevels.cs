@@ -9,7 +9,7 @@ namespace DataAccess.Accessors
     internal class SearchLevels : PostAccessor
     {
 
-        private static string SEARCH_LINK = BaseUrl.Current + "/search_levels.php?";
+        private static string SEARCH_LINK = Domain.Current + "/search_levels.php?";
 
 
         internal SearchLevels(SearchLevelInfo info)

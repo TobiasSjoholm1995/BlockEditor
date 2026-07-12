@@ -6,7 +6,7 @@ namespace DataAccess.Accessors
     internal class UploadLevel : PostAccessor
     {
 
-        private static string UploadLink    = BaseUrl.Current + "/upload_level.php";
+        private static string UploadLink    = Domain.Current + "/upload_level.php";
         private static string StatusExist   = "status=exists";
 
         internal UploadLevel(string levelData, Action<LevelExistArg> onLevelExist)

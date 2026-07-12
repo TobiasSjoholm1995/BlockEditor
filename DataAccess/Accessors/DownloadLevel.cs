@@ -13,7 +13,7 @@
 
         private string GetUrl(double levelID)
         {
-            string query = BaseUrl.Current + "/levels/"
+            string query = Domain.Current + "/levels/"
                         + levelID + ".txt";
                         // + "?version=" + version;  //PR2 server will auto take last version
 

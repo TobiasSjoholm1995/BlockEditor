@@ -6,7 +6,7 @@ namespace DataAccess.Accessors
     internal class BestWeekLevels
     {
 
-        private static string SEARCH_LINK = BaseUrl.Current + "/files/lists/best_week/";
+        private static string SEARCH_LINK = Domain.Current + "/files/lists/best_week/";
 
         public string Result { get; set; }
 

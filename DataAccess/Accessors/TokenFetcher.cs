@@ -15,7 +15,7 @@ namespace DataAccess.Accessors
     {
 
 
-        private static string LOGIN_LINK = BaseUrl.Current + "/login.php";
+        private static string LOGIN_LINK = Domain.Current + "/login.php";
 
         private readonly byte[] AES_KEY = { 85, 74, 47, 106, 110, 70, 42, 119, 82, 48, 113, 82, 75, 47, 100, 72 };
         private readonly byte[] AES_IV  = { 38, 99, 57, 42, 121, 42, 53, 112, 61, 49, 85, 78, 120, 47, 84, 114 };
@@ -99,7 +99,7 @@ namespace DataAccess.Accessors
         private async Task<string> Post(string url, Dictionary<string, string> values)
         {
             var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Referer", BaseUrl.Current + "/");
+            client.DefaultRequestHeaders.Add("Referer", Domain.Current + "/");
 
             var content  = new FormUrlEncodedContent(values);
             var response = await client.PostAsync(url, content).ConfigureAwait(false);
