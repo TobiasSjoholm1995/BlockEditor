@@ -229,6 +229,9 @@
     <None Update="Resources\Blocks\156.webp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Blocks\157.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Blocks\99.bmp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

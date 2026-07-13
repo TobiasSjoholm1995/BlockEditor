@@ -89,23 +89,23 @@ namespace BlockEditor.Views.Windows
                 return BlockSize.Zoom120;
 
             if (height < 740)
-                return BlockSize.Zoom80;
+                return BlockSize.Zoom40;
             if (height < 810)
-                return BlockSize.Zoom100;
+                return BlockSize.Zoom60;
             if (height < 890)
-                return BlockSize.Zoom120;
+                return BlockSize.Zoom80;
             if (height < 990)
-                return BlockSize.Zoom140;
+                return BlockSize.Zoom100;
             if (height < 1200)
-                return BlockSize.Zoom160;
+                return BlockSize.Zoom120;
 
-            return BlockSize.Zoom180;
+            return BlockSize.Zoom140;
         }
 
         private void SetBlockImageSize(double height = double.NaN)
         {
             var blockSize = GetBlockSize(height);
-            BlocksControl.Init(blockSize, 4);
+            BlocksControl.Init(blockSize, 3);
         }
 
         private void OnSelectedBlockId(int? id)
