@@ -6,6 +6,7 @@ using LevelModel.Models.Components;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace BlockEditor.Helpers
@@ -21,6 +22,24 @@ namespace BlockEditor.Helpers
             catch
             {
                 return 0;
+            }
+        }
+
+        public static uint GetPillarColor(SimpleBlock block)
+        {
+            try
+            {
+                var options = block.Options?.Split(':');
+                var color   = options?.LastOrDefault();
+
+                if (color != null && options.Length == 2)
+                    return 0xff000000 + (block.Options == "" ? 0x00ffffff : uint.Parse(color));
+
+                return 0xffffffff;
+            }
+            catch
+            {
+                return 0xffffffff;
             }
         }
 

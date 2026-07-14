@@ -61,10 +61,11 @@ namespace LevelModel.Models.Components
         public const int TOP_ONE_WAY   = 154;
         public const int DOWN_ONE_WAY  = 155;
         public const int BASIC_UNSAFE  = 156;
+        public const int BASIC_PILLAR  = 157;
 
 
         public static readonly int MaxBlockId_Pr2Hub = TELEPORT;
-        public static readonly int MaxBlockId_Trapwork = BASIC_UNSAFE;
+        public static readonly int MaxBlockId_Trapwork = BASIC_PILLAR;
 
 
         public int X { get; set; }
@@ -152,14 +153,14 @@ namespace LevelModel.Models.Components
                 case EGG:            return "Egg Minion";
                 case CUSTOM_STATS:   return "Custom Stats";
                 case TELEPORT:       return "Teleport";
-                case BASIC_UNSAFE: return "Basic Unsafe";
-                case TOP_ONE_WAY: return "Top One-Way";
+                case BASIC_UNSAFE:   return "Basic Unsafe";
+                case TOP_ONE_WAY:    return "Top One-Way";
                 case RIGHT_ONE_WAY: return "Right One-Way";
-                case DOWN_ONE_WAY: return "Down One-Way";   
-                case LEFT_ONE_WAY: return "Left One-Way";
-                case MUD: return "Mud";
-                case FREEZE: return "Freeze";
-                //case BASIC_PILLAR: return "Basic Pillar";
+                case DOWN_ONE_WAY:  return "Down One-Way";   
+                case LEFT_ONE_WAY:  return "Left One-Way";
+                case MUD:           return "Mud";
+                case FREEZE:        return "Freeze";
+                case BASIC_PILLAR:  return "Basic Pillar";
 
 
 

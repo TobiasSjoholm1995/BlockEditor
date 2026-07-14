@@ -38,14 +38,16 @@ namespace BlockEditor.Models
             var i = 0;
             foreach (var block in blocks)
             {
-                sprites[i] = BlockImages.GetSpriteFromId(block.ID);
+                sprites[i] = BlockImages.GetSprite(block);
 
                 var matrix = SKRotationScaleMatrix.CreateScale((float)BlockSizeUtil.GetScale(game.Map.BlockSize));
                 matrix.TX = block.Position.Value.X * game.Map.BlockPixelSize - game.Camera.Position.X;
                 matrix.TY = block.Position.Value.Y * game.Map.BlockPixelSize - game.Camera.Position.Y;
                 transforms[i] = matrix;
 
-                colors[i] = block.ID == Block.TELEPORT ? new SKColor(BlocksUtil.GetTeleportColor(block)) : SKColors.Transparent;
+                colors[i] = block.ID == Block.TELEPORT     ? new SKColor(BlocksUtil.GetTeleportColor(block))   : 
+                            block.ID == Block.BASIC_PILLAR ? new SKColor(BlocksUtil.GetPillarColor(block)) :
+                            SKColors.Transparent;
 
                 i++;
             }
@@ -56,7 +58,7 @@ namespace BlockEditor.Models
                 FilterQuality = SKFilterQuality.Low
             };
 
-            canvas.DrawAtlas(BlockImages.BlocksSheet, sprites, transforms, colors, SKBlendMode.SrcOver, paint);
+            canvas.DrawAtlas(BlockImages.BlocksSheet, sprites, transforms, colors, SKBlendMode.Luminosity, paint);
         }
 
         private List<ArtChunk> CreateArtCache(GameArt art)

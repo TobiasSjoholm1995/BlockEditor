@@ -53,16 +53,28 @@ namespace BlockEditor.Models
             LoadImages();
         }
 
-        public static SKRect GetSpriteFromId(int id)
+        public static SKRect GetSprite(SimpleBlock block)
         {
             const int SheetColumns = 10;
             const int BlockSize = 30;
+            const int IdShift = 100;
 
-            if (id >= 100)
-                id -= 100;
+            int id = block.ID;
+
+            if (id >= IdShift)
+                id -= IdShift;
 
             var y = (id / SheetColumns) * BlockSize;
             var x = (id % SheetColumns) * BlockSize;
+
+            if(id == Block.BASIC_PILLAR - IdShift)
+            {
+                var options = block.Options?.Split(':');
+                var style = options?.FirstOrDefault();
+
+                if (style != null && int.TryParse(style, NumberStyles.Number, CultureInfo.InvariantCulture, out var y_move))
+                    y += (y_move - 1) * BlockSize;
+            }
 
             return new SKRect(x, y, x + BlockSize, y + BlockSize);
         }
