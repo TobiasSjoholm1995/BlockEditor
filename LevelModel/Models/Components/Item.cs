@@ -24,17 +24,20 @@ namespace LevelModel.Models.Components
 
         public string Name { get; set; }
 
+        public int? Count { get; set; }
 
-        public Item(int id)
+        public Item(int id, int? count)
         {
             ID = id;
             Name = GetName(id);
+            Count = count;
         }
 
-        public Item(string name)
+        public Item(string name, int? count)
         {
             ID = GetID(name);
             Name = (ID == NONE) ? name : GetName(ID);
+            Count = count;
         }
 
 

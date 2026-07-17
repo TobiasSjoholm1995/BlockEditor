@@ -112,7 +112,7 @@ namespace Builders.Builders.LevelBuilders
             switch (_info.Type)
             {
                 case BuildType.Trapwork:
-                    items.Add(new Item(Item.LASER_GUN));
+                    items.Add(new Item(Item.LASER_GUN, null));
                     break;
             }
 

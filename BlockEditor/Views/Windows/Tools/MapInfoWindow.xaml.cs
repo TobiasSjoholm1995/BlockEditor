@@ -75,7 +75,7 @@ namespace BlockEditor.Views.Windows
             btnDrawArt.IsEnabled = drawArt != 0;
             btnTextArt.IsEnabled = textArt != 0;
 
-            ItemBlockOptionsControl.SetItems(_map.Level.Items);
+            ItemBlockOptionsControl.UpdateCheckboxItems(_map.Level.Items);
             HatsControl.SetBadHats(_map.Level.BadHats);
             MyColorPicker.SetColor(_map.Background.ToString());
 

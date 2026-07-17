@@ -16,14 +16,15 @@ namespace BlockEditor.Views.Windows
 
     public partial class UserInputWindow : Window
     {
+        private bool _allowEmpty;
 
-
-        public UserInputWindow(string question, string title, string defaultValue = "")
+        public UserInputWindow(string question, string title, string defaultValue = "", bool allowEmpty = false)
         {
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(PromptDialog_Loaded);
             txtQuestion.Text = question;
             Title = title;
+            _allowEmpty = allowEmpty;
             txtResponse.Text = defaultValue;
             UpdateButtons();
 
@@ -35,7 +36,7 @@ namespace BlockEditor.Views.Windows
             txtResponse.Focus();
         }
 
-        public static string Show(string question, string title, string defaultValue = "")
+        public static string Show(string question, string title, string defaultValue = "", bool allowEmpty = false)
         {
             var current = Mouse.OverrideCursor;
 
@@ -43,7 +44,7 @@ namespace BlockEditor.Views.Windows
             { 
                 Mouse.OverrideCursor = null;
 
-                var inst = new UserInputWindow(question, title, defaultValue);
+                var inst = new UserInputWindow(question, title, defaultValue, allowEmpty);
 
                 inst.ShowDialog();
 
@@ -79,7 +80,7 @@ namespace BlockEditor.Views.Windows
 
         private void UpdateButtons()
         {
-            btnOk.IsEnabled = !string.IsNullOrWhiteSpace(txtResponse.Text);
+            btnOk.IsEnabled = _allowEmpty ? true : !string.IsNullOrWhiteSpace(txtResponse.Text);
         }
         private void txtResponse_TextChanged(object sender, TextChangedEventArgs e)
         {

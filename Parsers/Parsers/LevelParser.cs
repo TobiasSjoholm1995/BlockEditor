@@ -68,10 +68,10 @@ namespace Parsers.Parsers
             foreach (string itemStr in s.Split('`'))
             {
                 if (int.TryParse(itemStr, NumberStyles.Any, CultureInfo.InvariantCulture, out int value))
-                    myReturn.Add(new Item(value));
+                    myReturn.Add(new Item(value, null));
                 else
                 {
-                    var item = new Item(itemStr);
+                    var item = new Item(itemStr, null);
                     if (item.ID != Item.NONE)
                         myReturn.Add(item);
                 }
