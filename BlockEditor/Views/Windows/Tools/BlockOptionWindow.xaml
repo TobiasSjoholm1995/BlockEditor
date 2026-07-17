@@ -50,7 +50,7 @@
                 <TextBlock x:Name="tbBlockOption" Margin="10,15,0,0" FontWeight="SemiBold" FontSize="{StaticResource DefaultFontSize}" Text="Block Options:"/>
             </StackPanel>
 
-            <StackPanel x:Name="okButtonPanel" Orientation="Horizontal" Margin="20,20,20,10" HorizontalAlignment="Center">
+            <StackPanel x:Name="okButtonPanel" Orientation="Horizontal" Margin="20,5,20,5" HorizontalAlignment="Center">
                 <Button Style="{StaticResource WhiteBtn}" FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" x:Name="btnOk" Content="OK" Margin="5,5,15,5" Click="btnOk_Click" />
                 <Button Style="{StaticResource WhiteBtn}" FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" Content="Cancel" Margin="15,5,5,5" Click="btnCancel_Click" />
             </StackPanel>

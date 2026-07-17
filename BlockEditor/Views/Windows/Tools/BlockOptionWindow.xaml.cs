@@ -1,15 +1,17 @@
-﻿using System;
-using System.Windows;
-using System.Globalization;
-using System.Windows.Input;
+﻿using BlockEditor.Helpers;
 using BlockEditor.Models;
-using LevelModel.Models.Components;
 using BlockEditor.Utils;
 using BlockEditor.Views.Controls;
+using LevelModel.Models.Components;
+using System;
+using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-using BlockEditor.Helpers;
+using System.Windows.Input;
 using System.Windows.Media;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BlockEditor.Views.Windows
 {
@@ -172,6 +174,61 @@ namespace BlockEditor.Views.Windows
                     c.OnBlockOptionChanged += OnOptionsChanged;
                     OptionPanel.Children.Add(c);
                 }
+                else if(_block.ID == Block.BASIC_PILLAR)
+                {
+                    var split = _block.Options?.Split(':');
+                    var style = split.FirstOrDefault();
+                    var color = split.Length > 1 ? split.LastOrDefault() : "";
+
+                    var panel1 = new StackPanel();
+                    panel1.Orientation = Orientation.Horizontal;
+                    panel1.VerticalAlignment = VerticalAlignment.Center;
+                    panel1.Margin = new Thickness(10, 10, 10, 5);
+
+                    var label1 = new TextBlock();
+                    label1.Text = "Style: ";
+                    label1.VerticalAlignment = VerticalAlignment.Center;
+                    label1.FontSize = 14;
+                    label1.FontWeight = FontWeights.SemiBold;
+                    label1.Margin = new Thickness(0,0,9,0);
+
+                    var cb = new ComboBox();
+                    cb.Items.Add("Pillar 1");
+                    cb.Items.Add("Pillar 2");
+                    cb.Items.Add("Pillar 3");
+                    cb.SelectedIndex = int.TryParse(style, out var pi) && pi >= 1 && pi <= 3 ? pi - 1 : 0;
+                    cb.VerticalAlignment = VerticalAlignment.Center;
+                    cb.SelectionChanged += PillarStyleChanged;
+                    cb.Width = 100;
+                    cb.BorderThickness = new Thickness(0);
+
+                    panel1.Children.Add(label1);
+                    panel1.Children.Add(cb);
+                    OptionPanel.Children.Add(panel1);
+
+                    var panel2 = new StackPanel();
+                    panel2.Orientation = Orientation.Horizontal;
+                    panel2.VerticalAlignment = VerticalAlignment.Center;
+                    panel2.Margin = new Thickness(10, 0, 10, 0);
+
+                    var label2 = new TextBlock();
+                    label2.Text = "Color: ";
+                    label2.VerticalAlignment = VerticalAlignment.Center;
+                    label2.FontSize = 14;
+                    label2.Margin = new Thickness(0, 0, 0, 15);
+                    label2.FontWeight = FontWeights.SemiBold;
+
+                    var c = new ColorPickerControl();
+                    c.VerticalAlignment = VerticalAlignment.Center;
+                    c.SetColor(_block.Options);
+                    c.Margin = new Thickness(5, 0, 5, 15);
+                    c.OnNewColor += OnNewColor;
+                    c.Height = 30;
+
+                    panel2.Children.Add(label2);
+                    panel2.Children.Add(c);
+                    OptionPanel.Children.Add(panel2);
+                }
                 else
                 {
                     var c = new BlockOptionsControl();
@@ -181,6 +238,22 @@ namespace BlockEditor.Views.Windows
                     OptionPanel.Children.Add(c);
                 }
             }
+        }
+
+        private void PillarStyleChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cb = sender as ComboBox;
+
+            if(cb == null)
+                return;
+
+            var splits = _block.Options?.Split(':');
+            var style  = (cb.SelectedIndex + 1).ToString(CultureInfo.InvariantCulture);
+            var color  = splits.Length > 1 ? splits.LastOrDefault() : "15592939";
+            var text   = style + ":" + color;
+
+            OnOptionsChanged(text);
+            _refreshGui?.Invoke();
         }
 
         private void btnConnected_Click()
@@ -251,6 +324,12 @@ namespace BlockEditor.Views.Windows
             catch
             {
                 MessageUtil.ShowError("Failed to convert color to PR2 block option format.");
+            }
+
+            if(_block.ID == Block.BASIC_PILLAR)
+            {
+                var style = _block.Options?.Split(':').FirstOrDefault() ?? "1";
+                text      = style + ":" + text;
             }
 
             OnOptionsChanged(text);

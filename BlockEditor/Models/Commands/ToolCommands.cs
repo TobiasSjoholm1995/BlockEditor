@@ -587,7 +587,7 @@ namespace BlockEditor.Models
                     return;
 
 
-                if (id == Block.ITEM_BLUE || id == Block.ITEM_RED)
+                if (id == Block.ITEM_BLUE || id == Block.ITEM_RED || id == Block.BASIC_PILLAR)
                 {
                     using (new TempCursor(null))
                     {
