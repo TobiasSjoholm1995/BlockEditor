@@ -26,7 +26,7 @@
 
                 <TextBlock FontSize="16" FontWeight="Bold" Text="Block Info" HorizontalAlignment="Center" Margin="0,3,0,0"/>
 
-                <Grid Margin="10, 20, 10, 5">
+                <Grid x:Name="gridPosition" Margin="10, 20, 10, 5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
@@ -50,6 +50,10 @@
                 <TextBlock x:Name="tbBlockOption" Margin="10,15,0,0" FontWeight="SemiBold" FontSize="{StaticResource DefaultFontSize}" Text="Block Options:"/>
             </StackPanel>
 
+            <StackPanel x:Name="okButtonPanel" Orientation="Horizontal" Margin="20,20,20,10" HorizontalAlignment="Center">
+                <Button Style="{StaticResource WhiteBtn}" FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" x:Name="btnOk" Content="OK" Margin="5,5,15,5" Click="btnOk_Click" />
+                <Button Style="{StaticResource WhiteBtn}" FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Width="100" Height="25" Content="Cancel" Margin="15,5,5,5" Click="btnCancel_Click" />
+            </StackPanel>
         </StackPanel>
     </Border>
 </models:ToolWindow>

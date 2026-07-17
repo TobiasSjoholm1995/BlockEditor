@@ -1,14 +1,14 @@
-﻿using BlockEditor.Utils;
-using BlockEditor.Helpers;
+﻿using BlockEditor.Helpers;
+using BlockEditor.Utils;
 using BlockEditor.Views.Controls;
 using BlockEditor.Views.Windows;
 using Builders.DataStructures.DTO;
+using LevelModel.Models.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Input;
-using LevelModel.Models.Components;
-
 using static BlockEditor.Models.UserMode;
 
 namespace BlockEditor.Models
@@ -75,12 +75,12 @@ namespace BlockEditor.Models
             MovePastedBlocksCommand = new RelayCommand((_) => MovePastedBlocks(game), (_) => MovePastedBlocksCanExecute(game));
         }
 
-        
+
         private void MovePastedBlocks(Game game)
         {
             game.CleanUserMode(true, true);
 
-            if(game.UserOperations.LastAddBlocksOperation == null)
+            if (game.UserOperations.LastAddBlocksOperation == null)
                 return;
 
             var blocksToRemove = game.UserOperations.LastAddBlocksOperation.GetBlocks().ToList();
@@ -89,10 +89,10 @@ namespace BlockEditor.Models
 
             w.ShowDialog();
 
-            if(w.DialogResult != true)
+            if (w.DialogResult != true)
                 return;
 
-            using(new TempCursor(Cursors.Wait))
+            using (new TempCursor(Cursors.Wait))
             {
                 BlocksUtil.Move(game, blocksToRemove, w.MoveX.Value, w.MoveY.Value);
             }
@@ -175,7 +175,8 @@ namespace BlockEditor.Models
             else
             {
                 game.CleanUserMode(true, false);
-            };
+            }
+            ;
         }
 
         private void Distance(Game game)
@@ -188,7 +189,8 @@ namespace BlockEditor.Models
             else
             {
                 game.CleanUserMode(true, false);
-            };
+            }
+            ;
         }
 
         private void Navigator(Game game, object o)
@@ -290,7 +292,7 @@ namespace BlockEditor.Models
             {
                 var r1 = UserQuestionWindow.Show("Do you wish to vertically flip the map?"
                     + Environment.NewLine + Environment.NewLine
-                    + "Note:  Art will not be moved.", 
+                    + "Note:  Art will not be moved.",
                     "Vertical Flip", false);
 
                 if (r1 != UserQuestionWindow.QuestionResult.Yes)
@@ -305,7 +307,7 @@ namespace BlockEditor.Models
                 }
             }
         }
-        
+
         private void HorizontalFlip(Game game)
         {
             if (BlockSelection.HorizontalFlipCommand.CanExecute(null))
@@ -321,7 +323,7 @@ namespace BlockEditor.Models
             {
                 var r = UserQuestionWindow.Show("Do you wish to horizontally flip the map?"
                       + Environment.NewLine + Environment.NewLine
-                      + "Note:  Art will not be moved. ", 
+                      + "Note:  Art will not be moved. ",
                       "Horizontal Flip", false);
 
                 if (r != UserQuestionWindow.QuestionResult.Yes)
@@ -337,7 +339,7 @@ namespace BlockEditor.Models
                 }
             }
         }
-       
+
         private void Rotate(Game game)
         {
             if (BlockSelection.RotateCommand.CanExecute(null))
@@ -360,7 +362,7 @@ namespace BlockEditor.Models
             {
                 var r = UserQuestionWindow.Show("Do you wish to rotate the map?"
                       + Environment.NewLine + Environment.NewLine
-                      + "Note:  Art will not be moved. ", 
+                      + "Note:  Art will not be moved. ",
                       "Rotate Blocks", false);
 
                 if (r != UserQuestionWindow.QuestionResult.Yes)
@@ -375,7 +377,7 @@ namespace BlockEditor.Models
                 }
             }
         }
-        
+
         private void MoveRegion(Game game)
         {
             game.CleanUserMode(true, false);
@@ -553,11 +555,11 @@ namespace BlockEditor.Models
 
                 var input = UserInputWindow.Show("Replace Probability: ", "Replace", "100");
 
-                if(!MyUtil.TryParse(input, out var probability))
+                if (!MyUtil.TryParse(input, out var probability))
                 {
-                    if(!string.IsNullOrEmpty(input))
+                    if (!string.IsNullOrEmpty(input))
                         throw new Exception("Invalid input");
-                    
+
                     return;
                 }
 
@@ -578,12 +580,31 @@ namespace BlockEditor.Models
             using (new TempOverwrite(game.Map.Blocks, true))
             {
                 var region = game.UserSelection.MapRegion;
-                var id = SelectBlockWindow.Show("Block to set option for:", false);
+                var id     = SelectBlockWindow.Show("Block to set option for:", false);
+                var input  = "";
 
                 if (id == null)
                     return;
 
-                var input = UserInputWindow.Show("Block Option Value: ", "Set Block Options", "");
+
+                if (id == Block.ITEM_BLUE || id == Block.ITEM_RED)
+                {
+                    using (new TempCursor(null))
+                    {
+                        var w = new BlockOptionWindow(game.Map, id.Value, game.Engine.RefreshGui);
+                        w.ShowDialog();
+
+                        if(w.OKButtonPressed)
+                            input = w.GetBlockOption;
+                        else
+                            return;
+                    }
+                }
+                else
+                {
+                    input = UserInputWindow.Show("Block Option Value: ", "Set Block Options", "");
+                }
+
 
                 using (new TempCursor(Cursors.Wait))
                 {
@@ -598,10 +619,10 @@ namespace BlockEditor.Models
         {
             if (game.Mode.Value != UserModes.BlockInfo)
             {
-                if(MySettings.FirstBlockInfo)
+                if (MySettings.FirstBlockInfo)
                 {
-                    MessageUtil.ShowInfo("Hint: To directly open the Block-Info window," 
-                        + Environment.NewLine +"you can hold down Ctrl while clicking a block.");
+                    MessageUtil.ShowInfo("Hint: To directly open the Block-Info window,"
+                        + Environment.NewLine + "you can hold down Ctrl while clicking a block.");
                     MySettings.FirstBlockInfo = false;
                 }
                 game.CleanUserMode(true, true);
@@ -631,7 +652,7 @@ namespace BlockEditor.Models
 
         internal void StartBlockInfo(Game game, MyPoint? index)
         {
-            if(index == null)
+            if (index == null)
                 return;
 
             bool navigate = false;
@@ -654,7 +675,7 @@ namespace BlockEditor.Models
 
         internal void StartFloodFill(Game game, MyPoint? index)
         {
-            if(index == null)
+            if (index == null)
                 return;
 
             var selectedId = SelectBlockWindow.Show("Flood Fill", false);

@@ -71,7 +71,7 @@ namespace BlockEditor.Models
         public SimpleBlock GetBlock(MyPoint? point, bool startBlocks = true)
         {
             if (point == null)
-                return new SimpleBlock();
+                return SimpleBlock.None;
 
             return GetBlock(point.Value.X, point.Value.Y, startBlocks);
         }

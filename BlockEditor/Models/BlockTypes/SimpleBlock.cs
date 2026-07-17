@@ -63,7 +63,7 @@ namespace BlockEditor.Models
 
         public bool IsEmpty()
         {
-            return Position == null;
+            return Position == null && ID == 0;
         }
 
         internal bool IsItem()

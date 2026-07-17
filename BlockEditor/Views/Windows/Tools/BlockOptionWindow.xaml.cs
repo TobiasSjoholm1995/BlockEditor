@@ -23,6 +23,9 @@ namespace BlockEditor.Views.Windows
         private Action _refreshGui;
 
         public bool StartNavigation { get; set; }
+        public bool OKButtonPressed { get; set; } = false;
+
+        public string GetBlockOption => _block.Options;
 
         public BlockOptionWindow(Map map, MyPoint? index, Action refreshGui)
         {
@@ -40,6 +43,22 @@ namespace BlockEditor.Views.Windows
             MyUtil.SetPopUpWindowPosition(this);
         }
 
+        public BlockOptionWindow(Map map, int blockID, Action refreshGui)
+        {
+            InitializeComponent();
+
+            if (map == null)
+                return;
+
+            _refreshGui = refreshGui;
+            _map = map;
+            _block = new SimpleBlock(blockID);
+            _mapItemOptions = ItemBlockOptionsControl.GetOptions(map.Level.Items);
+
+            Init(null);
+            MyUtil.SetPopUpWindowPosition(this);
+        }
+
         private SimpleBlock GetBlock(MyPoint index)
         {
             var block = _map.Blocks.StartBlocks.GetBlock(index);
@@ -50,19 +69,42 @@ namespace BlockEditor.Views.Windows
             return block;
         }
 
-        private void Init(MyPoint index)
+        private void Init(MyPoint? index)
         {
             if (_block.IsEmpty())
             {
-                lblPosX.Text = index.X.ToString(_culture);
-                lblPosY.Text = index.Y.ToString(_culture);
+                if (index != null)
+                {
+                    lblPosX.Text = index.Value.X.ToString(_culture);
+                    lblPosY.Text = index.Value.Y.ToString(_culture);
+                    okButtonPanel.Visibility = Visibility.Collapsed;
+
+                }
+                else
+                {   
+                    okButtonPanel.Visibility = Visibility.Visible;
+                    gridPosition.Visibility = Visibility.Collapsed;
+                }
+
                 tbBlockOption.Text = String.Empty;
             }
             else
             {
                 BlockImage.Source = BlockImages.GetImageBlock(BlockImages.BlockSize.Zoom160, _block.ID)?.Image;
-                lblPosX.Text = _block.Position.Value.X.ToString(_culture);
-                lblPosY.Text = _block.Position.Value.Y.ToString(_culture);
+
+                if (_block.Position == null)
+                {
+                    gridPosition.Visibility = Visibility.Collapsed;
+                    okButtonPanel.Visibility = Visibility.Visible;
+
+                }
+                else
+                {
+                    lblPosX.Text = _block.Position.Value.X.ToString(_culture);
+                    lblPosY.Text = _block.Position.Value.Y.ToString(_culture);
+                    okButtonPanel.Visibility = Visibility.Collapsed;
+                }
+
 
                 if (_block.IsItem())
                 {
@@ -112,7 +154,7 @@ namespace BlockEditor.Views.Windows
                     OptionPanel.Children.Add(panel);
                     OptionPanel.Children.Add(b);
                 }
-                else if(_block.ID == Block.HAPPY_BLOCK || _block.ID == Block.SAD_BLOCK)                
+                else if (_block.ID == Block.HAPPY_BLOCK || _block.ID == Block.SAD_BLOCK)
                 {
                     tbBlockOption.Text = "Stats Change:";
                     var c = new StatsBlockControl(_block.ID == Block.SAD_BLOCK);
@@ -190,10 +232,12 @@ namespace BlockEditor.Views.Windows
                 return;
 
             var ignoreOption = _block.IsItem() && string.Equals(text, _mapItemOptions, StringComparison.CurrentCultureIgnoreCase);
+            _block.Options   = ignoreOption ? string.Empty : text;;
 
-            _block = new SimpleBlock(_block.ID, _block.Position.Value, ignoreOption ? string.Empty : text);
+            if(_block.Position == null)
+                return;
 
-            using(new TempOverwrite(_map.Blocks, true))
+            using (new TempOverwrite(_map.Blocks, true))
                 _map.Blocks.Add(_block);
         }
 
@@ -218,5 +262,15 @@ namespace BlockEditor.Views.Windows
             Close();
         }
 
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            OKButtonPressed = true;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }
