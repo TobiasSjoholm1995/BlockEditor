@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace LevelModel.Models.Components
 {
@@ -45,15 +46,15 @@ namespace LevelModel.Models.Components
         {
             switch (itemID)
             {
-                case LASER_GUN:   return "Laser Gun";
-                case MINE:        return "Mine";
-                case LIGHTNING:   return "Lightning";
-                case TELEPORT:    return "Teleport";
-                case SUPER_JUMP:  return "Super Jump";
-                case JET_PACK:    return "Jet Pack";
+                case LASER_GUN: return "Laser Gun";
+                case MINE: return "Mine";
+                case LIGHTNING: return "Lightning";
+                case TELEPORT: return "Teleport";
+                case SUPER_JUMP: return "Super Jump";
+                case JET_PACK: return "Jet Pack";
                 case SPEED_BURST: return "Speed Burst";
-                case SWORD:       return "Sword";
-                case ICE_WAVE:    return "Ice Wave";
+                case SWORD: return "Sword";
+                case ICE_WAVE: return "Ice Wave";
 
                 default: return "Unknown";
             }
@@ -86,6 +87,16 @@ namespace LevelModel.Models.Components
             return NONE;
         }
 
+        public static bool SupportCustomCount(int id)
+        {
+            if (id == LASER_GUN) return true;
+            if (id == SWORD) return true;
+            if (id == TELEPORT) return true;
+            if (id == JET_PACK) return true;
+            if (id == SUPER_JUMP) return true;
+
+            return false;
+        }
 
     }
 }

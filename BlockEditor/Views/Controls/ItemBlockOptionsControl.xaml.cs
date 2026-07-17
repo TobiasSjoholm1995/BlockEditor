@@ -121,6 +121,9 @@ namespace BlockEditor.Views.Controls
             if(item == null)
                 return;
 
+            if(!Item.SupportCustomCount(item.ID))
+                return;
+
             var input = UserInputWindow.Show("Item Count: (leave empty to apply default) ", item.Name, item.Count == null ? "" : item.Count.ToString(), true);
             var ok    = int.TryParse(input, out var count);
 
