@@ -82,6 +82,7 @@ namespace BlockEditor.Models
             w.AddOption("Replace Block", Tools.ReplaceCommand);
             w.AddOption("Replace Color", Tools.ReplaceArtColorCommand);
             w.AddOption("Reverse Arrows", ReverseArrowsCommand);
+            w.AddOption("Block Options", Tools.BlockOptionCommand);
             w.ShowDialog();
             w.Execute();
         }

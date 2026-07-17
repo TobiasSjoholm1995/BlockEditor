@@ -65,6 +65,28 @@ namespace BlockEditor.Helpers
             return result;
         }
 
+
+        public static List<SimpleBlock> SetBlockOptions(Blocks blocks, List<int> blockIds, MyRegion region, string option)
+        {
+            var result = new List<SimpleBlock>();
+
+            if (blocks == null)
+                return result;
+
+            foreach(var b in GetBlocks(blocks, region))
+            {
+                if(b.IsEmpty())
+                    continue;
+
+                if(!blockIds.Contains(b.ID))
+                    continue;
+
+                result.Add(new SimpleBlock(b.ID, b.Position.Value.X, b.Position.Value.Y, option ?? string.Empty));
+            }
+
+            return result;
+        }
+
         public static List<SimpleBlock> GetBlocks(Blocks blocks, MyRegion region)
         {
             var result = new List<SimpleBlock>();

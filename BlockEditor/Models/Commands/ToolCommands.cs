@@ -42,6 +42,7 @@ namespace BlockEditor.Models
         public RelayCommand DeleteModeCommand { get; }
         public RelayCommand DeselectCommand { get; }
         public RelayCommand MovePastedBlocksCommand { get; }
+        public RelayCommand BlockOptionCommand { get; }
 
         public ToolCommands(Game game)
         {
@@ -52,6 +53,7 @@ namespace BlockEditor.Models
             MapInfoCommand = new RelayCommand((_) => MapInfo(game));
             BlockCountCommand = new RelayCommand((_) => BlockCount(game));
             ReplaceCommand = new RelayCommand((_) => Replace(game));
+            BlockOptionCommand = new RelayCommand((_) => SetBlockOption(game));
             BuildImageCommand = new RelayCommand((_) => BuildImage(game));
             RotateCommand = new RelayCommand((_) => Rotate(game));
             VerticalFlipCommand = new RelayCommand((_) => VerticalFlip(game));
@@ -564,6 +566,30 @@ namespace BlockEditor.Models
                     var blocks = BlocksUtil.ReplaceBlock(game.Map?.Blocks, new List<int>() { id1.Value }, new List<int>() { id2.Value }, region);
 
                     game.AddBlocks(blocks.Where(b => RandomUtil.GetRandom(1, 99) < probability));
+                }
+            }
+        }
+
+        private void SetBlockOption(Game game)
+        {
+            game.CleanUserMode(true, false);
+
+
+            using (new TempOverwrite(game.Map.Blocks, true))
+            {
+                var region = game.UserSelection.MapRegion;
+                var id = SelectBlockWindow.Show("Block to set option for:", false);
+
+                if (id == null)
+                    return;
+
+                var input = UserInputWindow.Show("Block Option Value: ", "Set Block Options", "");
+
+                using (new TempCursor(Cursors.Wait))
+                {
+                    var blocks = BlocksUtil.SetBlockOptions(game.Map?.Blocks, new List<int>() { id.Value }, region, input);
+
+                    game.AddBlocks(blocks);
                 }
             }
         }
