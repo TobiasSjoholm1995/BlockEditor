@@ -77,7 +77,7 @@ namespace LevelModel.Models.Components
 
             foreach (var b in blocks) {
                 sb.Append(b.X + ";" + b.Y);
-                sb.Append(GetID(b.Id, ref lastId));
+                sb.Append(GetID(b, ref lastId));
 
                 if(!string.IsNullOrWhiteSpace(b.Options))
                     sb.Append(";" + b.Options);
@@ -89,10 +89,11 @@ namespace LevelModel.Models.Components
         }
 
 
-        private static string GetID(int id, ref int lastId) {
+        private static string GetID(Block block, ref int lastId) {
             string myReturn = string.Empty;
+            var id = block.Id;
 
-            if (lastId != id || id == Block.TELEPORT) {
+            if (lastId != id || id == Block.TELEPORT || !string.IsNullOrWhiteSpace(block.Options)) {
                 myReturn = ";" + id;
                 lastId = id;
             }
