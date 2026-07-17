@@ -3,6 +3,7 @@ using BlockEditor.Views.Windows;
 using LevelModel.Models.Components;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace BlockEditor.Views.Controls
 
         public event Action<string> OnBlockOptionChanged;
         public event Action<List<Item>> OnItemChanged;
+        public bool AllowCustomItemCount { get; set; } = false;
 
 
         public ItemBlockOptionsControl()
@@ -42,10 +44,21 @@ namespace BlockEditor.Views.Controls
                 if (cb == null)
                     continue;
 
-                if (!(cb.Tag is Item item))
+                if (!(cb.Tag is Item cbItem))
                     continue;
 
-                cb.IsChecked = items.Any(i => i.ID == item.ID);
+                var optionItem = items.FirstOrDefault(i => i.ID == cbItem.ID);
+
+                if(optionItem == null)
+                {
+                    cb.IsChecked = false;
+                    cb.Content = GetItemName(cbItem);
+                }
+                else
+                {
+                    cb.IsChecked = true;
+                    cb.Content   = GetItemName(optionItem);
+                }
             }
         }
 
@@ -65,7 +78,7 @@ namespace BlockEditor.Views.Controls
 
                 var options    = s.Split(':');
                 var id_text    = options.FirstOrDefault();
-                var count_text = options.LastOrDefault();
+                var count_text = options.Length > 1 ? options.LastOrDefault() : null;
 
                 if(string.IsNullOrWhiteSpace(id_text))
                     continue;
@@ -73,16 +86,32 @@ namespace BlockEditor.Views.Controls
                 if(!int.TryParse(id_text.Trim(), out var id))
                     continue;
 
-                var cb = _checkboxes.Where(x => x.Tag is Item tag && tag.ID == id).FirstOrDefault();
+                var cb   = _checkboxes.Where(x => x.Tag is Item tag && tag.ID == id).FirstOrDefault();
 
                 if (cb == null)
                     continue;
 
-                cb.IsChecked = true; 
+                cb.IsChecked = true;
 
-                if(cb.Tag is Item item && !string.IsNullOrWhiteSpace(count_text) && int.TryParse(count_text, out var count))
+                if (!(cb.Tag is Item item))
+                    continue;
+
+                if (!string.IsNullOrWhiteSpace(count_text) && int.TryParse(count_text, out var count))
                     item.Count = count;
+
+                cb.Content = GetItemName(item);
             }
+        }
+
+        private string GetItemName(Item item)
+        {
+            if (item == null)
+                return "";
+
+            if (!Item.SupportCustomCount(item.ID))
+                return item.Name;
+
+            return item.Name + (item.Count == null ? "" : " (" + item.Count.Value.ToString(CultureInfo.InvariantCulture) + ")");
         }
 
         private void Init()
@@ -92,7 +121,7 @@ namespace BlockEditor.Views.Controls
             foreach (var item in GetDefualtItems())
             {
                 var cb = new CheckBox();
-                cb.Content = item.Name;
+                cb.Content = GetItemName(item);
                 cb.Tag = item;
                 cb.FontSize = 14;
                 cb.HorizontalAlignment = HorizontalAlignment.Left;
@@ -107,10 +136,10 @@ namespace BlockEditor.Views.Controls
 
         private void CheckItemCount(CheckBox cb)
         {
-            if(cb == null)
+            if (!AllowCustomItemCount)
                 return;
 
-            if(cb.IsChecked == false)
+            if(cb == null)
                 return;
 
             if(!cb.IsLoaded)
@@ -121,14 +150,24 @@ namespace BlockEditor.Views.Controls
             if(item == null)
                 return;
 
-            if(!Item.SupportCustomCount(item.ID))
+            if (!Item.SupportCustomCount(item.ID))
                 return;
+
+            if (cb.IsChecked == false)
+            {
+                cb.Content = item.Name;
+                return;
+            }
 
             var input = UserInputWindow.Show("Item Count: (leave empty to apply default) ", item.Name, item.Count == null ? "" : item.Count.ToString(), true);
             var ok    = int.TryParse(input, out var count);
 
-            if(ok)
+            if (ok)
                 item.Count = count;
+            else if (input != null && string.IsNullOrWhiteSpace(input))
+                item.Count = null;
+
+            cb.Content = GetItemName(item);
         }
 
         public static string GetOptions(IEnumerable<Item> items)
@@ -147,7 +186,7 @@ namespace BlockEditor.Views.Controls
                 builder.Append(item.ID.ToString(CultureInfo.InvariantCulture));
 
                 if(item.Count != null)
-                    builder.Append("-" + item.Count.Value.ToString(CultureInfo.InvariantCulture));
+                    builder.Append(":" + item.Count.Value.ToString(CultureInfo.InvariantCulture));
             }
 
             return builder.ToString();

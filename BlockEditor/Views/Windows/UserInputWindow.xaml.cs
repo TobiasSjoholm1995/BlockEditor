@@ -51,7 +51,7 @@ namespace BlockEditor.Views.Windows
                 if (inst.DialogResult == true)
                     return inst.ResponseText;
 
-                return string.Empty;
+                return allowEmpty ? null : string.Empty;
             }
             finally
             {

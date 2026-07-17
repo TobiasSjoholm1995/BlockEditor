@@ -67,6 +67,7 @@ namespace BlockEditor.Views.Windows
                 if (_block.IsItem())
                 {
                     var c = new ItemBlockOptionsControl();
+                    c.AllowCustomItemCount = true;
 
                     if (string.IsNullOrWhiteSpace(_block.Options))
                         c.UpdateCheckboxItems(_map.Level.Items);
