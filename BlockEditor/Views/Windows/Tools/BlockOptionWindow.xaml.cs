@@ -220,7 +220,7 @@ namespace BlockEditor.Views.Windows
 
                     var c = new ColorPickerControl();
                     c.VerticalAlignment = VerticalAlignment.Center;
-                    c.SetColor(_block.Options);
+                    c.SetColor(color);
                     c.Margin = new Thickness(5, 0, 5, 15);
                     c.OnNewColor += OnNewColor;
                     c.Height = 30;
