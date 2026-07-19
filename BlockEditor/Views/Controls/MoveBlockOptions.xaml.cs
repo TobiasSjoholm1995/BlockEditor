@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace BlockEditor.Views.Controls
 {
