@@ -229,6 +229,15 @@ namespace BlockEditor.Views.Windows
                     panel2.Children.Add(c);
                     OptionPanel.Children.Add(panel2);
                 }
+                else if(_block.ID == Block.MOVE_BLOCK)
+                {
+                    tbBlockOption.Text = string.Empty;
+                    var c = new MoveBLockOptions();
+                    c.SetBlockOptions(_block.Options);
+                    c.Margin = new Thickness(10, 0, 10, 20);
+                    c.OnBlockOptionChanged += OnOptionsChanged;
+                    OptionPanel.Children.Add(c);
+                }
                 else
                 {
                     var c = new BlockOptionsControl();
