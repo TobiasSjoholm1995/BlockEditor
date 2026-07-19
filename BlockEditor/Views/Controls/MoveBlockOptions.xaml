@@ -8,14 +8,14 @@
              HorizontalAlignment="Stretch"
              Margin="0">
     <StackPanel HorizontalAlignment="Stretch">
+        <Label>The pattern "EEESWWN" goes in a clockwise path.</Label>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <Label FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Content="Pattern: " VerticalAlignment="Center"/>
+            <Label FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Content="Pattern: " MinWidth="65" VerticalAlignment="Center"/>
             <TextBox FontSize="{StaticResource DefaultFontSize}" Name="tbPattern" TextChanged="TextBox_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="250"/>
         </StackPanel>
-        <Label>The pattern "EEESWWN" goes in a clockwise path</Label>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <Label FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Content="Delay: " VerticalAlignment="Center"/>
+            <Label FontSize="{StaticResource DefaultFontSize}" FontWeight="SemiBold" Content="Delay: " MinWidth="65" VerticalAlignment="Center"/>
             <TextBox FontSize="{StaticResource DefaultFontSize}" Name="tbDelay" TextChanged="TextBox_TextChanged" VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="250"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="5,10,0,5">

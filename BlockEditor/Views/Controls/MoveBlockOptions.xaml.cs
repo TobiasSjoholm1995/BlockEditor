@@ -33,8 +33,8 @@ namespace BlockEditor.Views.Controls
 
                 if (int.TryParse(split[2], out var data))
                 {
-                    cbLoop.IsChecked  = data % 2 == 1;
-                    cbRigid.IsChecked = data % 2 == 0;
+                    cbLoop.IsChecked  = data == 1  || data == 3;
+                    cbRigid.IsChecked = data == 2  || data == 3;
                 }
                 else
                 {
