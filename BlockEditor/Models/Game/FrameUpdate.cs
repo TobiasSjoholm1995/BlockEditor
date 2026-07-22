@@ -33,6 +33,9 @@ namespace BlockEditor.Models
 
         private void Update()
         {
+            if(_game?.Camera?.Position == null) 
+                return;
+
             _surface.Canvas.Clear(_game.Map.Background);
 
             DrawArt(_game.Map.Art1);

@@ -38,6 +38,9 @@ namespace BlockEditor.Models
             var i = 0;
             foreach (var block in blocks)
             {
+                if(block.Position == null)
+                    continue;
+
                 sprites[i] = BlockImages.GetSprite(block);
 
                 var matrix = SKRotationScaleMatrix.CreateScale((float)BlockSizeUtil.GetScale(game.Map.BlockSize));
