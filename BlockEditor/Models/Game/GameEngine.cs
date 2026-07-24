@@ -49,9 +49,6 @@ namespace BlockEditor.Models
 
         public void RefreshGui()
         {
-            if(!Pause)
-                return;
-
             OnFrame?.Invoke();
         }
 
