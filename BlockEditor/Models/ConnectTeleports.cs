@@ -6,8 +6,11 @@ using static System.Windows.Forms.Design.AxImporter;
 
 namespace BlockEditor.Models
 {
+    public enum Teleport { Valid, Unsupported, NotConnected }
+
     public class ConnectTeleports
     {
+
 
         private List<SimpleBlock> _blocks { get; }
         public string Options { get; set; }
