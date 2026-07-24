@@ -61,8 +61,9 @@ namespace Converters.Converters
                    EncodeAttribute("gameMode")           + "=" + EncodeAttribute(gameMode)       + "&" + 
                    EncodeAttribute("cowboyChance")       + "=" + EncodeAttribute(cowboyChance)   + "&" + 
                    EncodeAttribute("token")              + "=" + EncodeAttribute(token)          + "&" +
-                   EncodeAttribute("overwrite_existing") + "=" + EncodeAttribute(overwrite)      +"&" +
-                   EncodeAttribute("to_newest")          + "=" + EncodeAttribute(newest);
+                   EncodeAttribute("overwrite_existing") + "=" + EncodeAttribute(overwrite)      + "&"  +
+                   EncodeAttribute("to_newest")          + "=" + EncodeAttribute(newest)         + "&"  +
+                   EncodeAttribute("replays_public")     + "=" + EncodeAttribute(replays);
         }
 
         private string EncodeAttribute(string text)
